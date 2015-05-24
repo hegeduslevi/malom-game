@@ -7,6 +7,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.sun.tools.corba.se.idl.constExpr.Equal;
+
 /***
  * Az alkalmazások működéséhez szükséges algoritmusok gyűjtő osztálya.
  *
@@ -237,7 +239,8 @@ public class Algoritmusok {
 	/***
 	 * Megadja a táblán előforduló malom állapotok listját.
 	 * 
-	 * @param t a tábla állapotát tároló objektum
+	 * @param t
+	 *            a tábla állapotát tároló objektum
 	 * @return a malom helyzetek számokkal reprezentált listája.
 	 */
 	public static List<Integer> getMalmok(Integer[][] t) {
@@ -315,21 +318,31 @@ public class Algoritmusok {
 			}
 		}
 	}
+
 	/***
 	 * Megadja, hogy egy lépés szabályos-e.
 	 * 
-	 * @param color a kő színe
-	 * @param row a lépés céljának sora 
-	 * @param col a lépés céljának oszlopa
+	 * @param color
+	 *            a kő színe
+	 * @param row
+	 *            a lépés céljának sora
+	 * @param col
+	 *            a lépés céljának oszlopa
 	 * @return szabályos-e
 	 */
 	private boolean isValidStep(String color, int row, int col) {
 		if ("b".equals(color)) {
 			if (Malom.t.getTable()[row][col] == 0) {
-
+				if (!isStoneInMalom(row, col, "c")) {
+					return true;
+				}
 			}
 		} else {
-
+			if (Malom.t.getTable()[row][col] == 0) {
+				if (!isStoneInMalom(row, col, "b")) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -337,17 +350,90 @@ public class Algoritmusok {
 	/***
 	 * Megmutatja mely pozíciókra léphet, vagy tehet követ a játékos.
 	 */
-	public void showAvailableSpots() {
+	public static void showAvailableSpots() {
 		if (Malom.roundCounter % 2 == 1) {
-			if (Malom.playerOne.getOnBoardStones() != Malom.playerOne
-					.getStones()) {
-
+			if ((Malom.playerOne.getOnBoardStones() != Malom.playerOne
+					.getStones()) || Malom.playerOne.canJump()) {
+				for (int r = 0; r < 8; r++)
+					for (int c = 0; c < 3; c++)
+						if (Malom.t.getTable()[r][c] == 0)
+							for (StoneType st : MainScreen.stones)
+								if (st.getRow() == r && st.getCol() == c)
+									if (st.getState() == "p")
+										st.setVisible(true);
+				/*
+				 * } else {
+				 * 
+				 * }
+				 */
+			}
+		} else {
+			if ((Malom.playerTwo.getOnBoardStones() != Malom.playerTwo
+					.getStones()) || Malom.playerTwo.canJump()) {
+				for (int r = 0; r < 8; r++)
+					for (int c = 0; c < 3; c++)
+						if (Malom.t.getTable()[r][c] == 0)
+							for (StoneType st : MainScreen.stones)
+								if (st.getRow() == r && st.getCol() == c)
+									if (st.getState() == "p")
+										st.setVisible(true);
 			}
 		}
 	}
 
-	/*public void putStone() {
-
-	}*/
-
+	/***
+	 * Megadja hogy az adott pozíción történő kattintással követ választottak-e
+	 * ki.
+	 * 
+	 * @param st
+	 *            a követ szimbolizáló kő típus
+	 * @param me
+	 *            az egér-esemény
+	 * @return visszaadja a találat helyességét
+	 */
+	public static boolean isClicked(StoneType st, MouseEvent me) {
+		Integer[] data = Algoritmusok.getCorrectDataForStones(st.getRow(), st.getCol());
+		int laMidX = (int) ((data[1])*45 + 15);
+		int laMidY = (int) ((data[0])*45 + 15 + 20);
+		
+		if (Math.abs(laMidX - me.getX()) < 15) {
+			if (Math.abs(laMidY - me.getY()) < 15) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/***
+	 * A táblára tesz egy követ
+	 * 
+	 * @param me az egér esemény
+	 */
+	public static void putStone(MouseEvent me) { 
+		if (Malom.roundCounter % 2 == 1) {
+			for (StoneType st : MainScreen.stones) {
+				if (!st.getVisible())
+					if (isClicked(st, me)) 
+						if ("r".equals(st.getColor())) 
+							if ("n".equals(st.getState())) {
+								st.setVisible(true);
+								Malom.playerOne.setOnBoardStones(Malom.playerOne.getOnBoardStones() + 1);
+							}
+			}
+		} else {
+			for (StoneType st : MainScreen.stones) {
+				if (!st.getVisible()) 
+					if (isClicked(st, me)) 
+						if ("b".equals(st.getColor())) 
+							if ("n".equals(st.getState())) {
+								st.setVisible(true);
+								Malom.playerTwo.setOnBoardStones(Malom.playerTwo.getOnBoardStones() + 1);
+							}
+			}
+		}
+	}
+	
+	public static void moveStone() {
+		
+	}
 }

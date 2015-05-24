@@ -23,7 +23,7 @@ public class Malom {
 	/***
 	 * A játék körökre osztását szolgálja és az aktuális játékos eldöltését segíti elő.
 	 */
-	public static Integer roundCounter = 0;
+	public static Integer roundCounter = 1;
 	
 	/***
 	 * Az egyes játékos.

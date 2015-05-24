@@ -62,31 +62,7 @@ public class MainScreen {
 		initialize();
 	}
 
-	/***
-	 * Megadja hogy az adott pozíción történő kattintással követ választottak-e
-	 * ki.
-	 * 
-	 * @param st
-	 *            a követ szimbolizáló kő típus
-	 * @param arg0
-	 *            az egér-esemény
-	 * @return visszaadja a találatot
-	 */
-	private boolean isClicked(StoneType st, MouseEvent arg0) {
-		Integer[] data = Algoritmusok.getCorrectDataForStones(st.getRow(), st.getCol());
-		int laMidX = (int) ((data[1])*45 + 15);
-		int laMidY = (int) ((data[0])*45 + 15 + 20);
-
-		
-		if (Math.abs(laMidX - arg0.getX()) < 15) {
-			if (Math.abs(laMidY - arg0.getY()) < 15) {
-				//logger.info("kattintás talált {} {}", data[0], data[1]);
-
-				return true;
-			}
-		}
-		return false;
-	}
+	
 
 	/***
 	 * Elkészíti a keret tartalmát a megjelenítésre.
@@ -137,28 +113,36 @@ public class MainScreen {
 		btnNewButton_1.setBounds(328, 254, 89, 23);
 		imgPanel.add(btnNewButton_1);
 		
-		JLabel lblKvekSzma_1 = new JLabel("Kövek száma:");
+		JLabel lblKvekSzma_1 = new JLabel("Kövek száma: " + Malom.playerOne.getStones());
 		lblKvekSzma_1.setBounds(305, 32, 112, 14);
 		imgPanel.add(lblKvekSzma_1);
 		
-		JLabel lblKvekATablan_1 = new JLabel("Kövek a táblán: ");
+		JLabel lblKvekATablan_1 = new JLabel("Kövek a táblán: " + Malom.playerOne.getOnBoardStones());
 		lblKvekATablan_1.setBounds(305, 57, 112, 14);
 		imgPanel.add(lblKvekATablan_1);
 		
-		JLabel lblKvekSzma_2 = new JLabel("Kövek száma:");
+		JLabel lblKvekSzma_2 = new JLabel("Kövek száma: " + Malom.playerTwo.getStones());
 		lblKvekSzma_2.setBounds(305, 142, 101, 14);
 		imgPanel.add(lblKvekSzma_2);
 		
-		JLabel lblKvekATablan_2 = new JLabel("Kövek a táblán:");
+		JLabel lblKvekATablan_2 = new JLabel("Kövek a táblán: " + Malom.playerTwo.getOnBoardStones());
 		lblKvekATablan_2.setBounds(305, 167, 112, 14);
 		imgPanel.add(lblKvekATablan_2);
 		
 		JLabel lblMostUgorhatsz_1 = new JLabel("Most ugorhatsz!");
 		lblMostUgorhatsz_1.setBounds(305, 82, 112, 14);
+		if (Malom.playerOne.canJump())
+			lblMostUgorhatsz_1.setVisible(true);
+		else
+			lblMostUgorhatsz_1.setVisible(false);
 		imgPanel.add(lblMostUgorhatsz_1);
 		
 		JLabel lblMostUgorhatsz_2 = new JLabel("Most ugorhatsz!");
 		lblMostUgorhatsz_2.setBounds(305, 192, 101, 14);
+		if (Malom.playerTwo.canJump())
+			lblMostUgorhatsz_2.setVisible(true);
+		else
+			lblMostUgorhatsz_2.setVisible(false);
 		imgPanel.add(lblMostUgorhatsz_2);
 		
 		JCheckBox stepHelper = new JCheckBox("Lépés segítőt mutat");
@@ -166,28 +150,33 @@ public class MainScreen {
 		stepHelper.setSelected(true);
 		imgPanel.add(stepHelper);
 
-		
 		for (StoneType s : stones) {
 			imgPanel.add(s.getLabel());
 		}
 		
 		Algoritmusok.updateTable();
-
+		Algoritmusok.showAvailableSpots();
+		
 		frmMalom.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (arg0.getButton() == MouseEvent.BUTTON1) {
 					for (StoneType st : stones) {
 						if (st.getVisible())
-							if (isClicked(st, arg0)) {
+							if (Algoritmusok.isClicked(st, arg0)) {
 								Algoritmusok.updateTable();
 								frmMalom.repaint();
 							}
 					}
 				}
 
-				if (arg0.getButton() == MouseEvent.BUTTON2) {
-					
+				if (arg0.getButton() == MouseEvent.BUTTON3) {
+					Algoritmusok.putStone(arg0); 
+					frmMalom.repaint();
+					lblKvekSzma_1.setText("Kövek száma: " + Malom.playerOne.getStones());
+					lblKvekATablan_1.setText("Kövek a táblán: " + Malom.playerOne.getOnBoardStones());
+					lblKvekSzma_2.setText("Kövek száma: " + Malom.playerTwo.getStones());
+					lblKvekATablan_2.setText("Kövek a táblán: " + Malom.playerTwo.getOnBoardStones());
 				}
 			}
 		});

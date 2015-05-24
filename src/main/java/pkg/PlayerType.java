@@ -63,4 +63,13 @@ public class PlayerType {
 	public int getOnBoardStones() {
 		return onBoard;
 	}
+	
+	/***
+	 * Beállítja a táblán taláható kövek számát.
+	 *
+	 * @param count kövek száma
+	 */
+	public void setOnBoardStones(int count) {
+		this.onBoard = count;
+	}
 }
