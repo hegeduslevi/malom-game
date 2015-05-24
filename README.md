@@ -1,5 +1,10 @@
-#Malom j�t�k
+#Malom játék
 
-Ez a project malom j�t�k JAVA implement�ci�j�t tartalmazza.
+Ez a project malomjáték JAVA implementációját tartalmazza.
 
-A program JDBC kapcsolaton kereszt�l csatlakozik egy SQL adatb�zishoz ahol nyilv�ntartja a j�t�kosi statisztik�kat.
+A program JDBC kapcsolaton keresztül csatlakozik egy SQL adatbázishoz ahol nyilvántartja a játékosi statisztikákat.
+
+A kezelőfelület használata: 
+	- Bal egérgombbal lehet mozgatni a köveket (nincs implementálva)
+	- Jobb egérgombbal lehet lehelyezni követ a táblára 
+	- a kör befejezését a következő gomb lenyomásával lehet kezdeményezni.
