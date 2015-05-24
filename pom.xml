@@ -6,12 +6,12 @@
 	<version>1.0</version>
 	<developers>
 		<developer>
-		<id>hegeduslevi</id>
-		<name>Hegedűs Levente</name>
-		<organization>Berkó-gép</organization>
-		<organizationUrl>berkogep.tk</organizationUrl>
-		<url>berkogep.tk</url>
-		<email>berkogep@gmail.com</email>
+			<id>hegeduslevi</id>
+			<name>Hegedűs Levente</name>
+			<organization>Berkó-gép</organization>
+			<organizationUrl>berkogep.tk</organizationUrl>
+			<url>berkogep.tk</url>
+			<email>berkogep@gmail.com</email>
 		</developer>
 	</developers>
 	<properties>
@@ -112,6 +112,21 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>pkg.Malom</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -404,7 +404,7 @@ public class Algoritmusok {
 	}
 	
 	/***
-	 * A táblára tesz egy követ
+	 * A táblára tesz egy követ.
 	 * 
 	 * @param me az egér esemény
 	 */
@@ -432,7 +432,4 @@ public class Algoritmusok {
 		}
 	}
 	
-	public static void moveStone() {
-		
-	}
 }
