@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import com.sun.tools.corba.se.idl.constExpr.Equal;
 
 /***
  * Az alkalmazások működéséhez szükséges algoritmusok gyűjtő osztálya.

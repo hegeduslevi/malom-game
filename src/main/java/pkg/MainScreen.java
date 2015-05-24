@@ -113,19 +113,19 @@ public class MainScreen {
 		btnNewButton_1.setBounds(328, 254, 89, 23);
 		imgPanel.add(btnNewButton_1);
 		
-		JLabel lblKvekSzma_1 = new JLabel("Kövek száma: " + Malom.playerOne.getStones());
+		final JLabel lblKvekSzma_1 = new JLabel("Kövek száma: " + Malom.playerOne.getStones());
 		lblKvekSzma_1.setBounds(305, 32, 112, 14);
 		imgPanel.add(lblKvekSzma_1);
 		
-		JLabel lblKvekATablan_1 = new JLabel("Kövek a táblán: " + Malom.playerOne.getOnBoardStones());
+		final JLabel lblKvekATablan_1 = new JLabel("Kövek a táblán: " + Malom.playerOne.getOnBoardStones());
 		lblKvekATablan_1.setBounds(305, 57, 112, 14);
 		imgPanel.add(lblKvekATablan_1);
 		
-		JLabel lblKvekSzma_2 = new JLabel("Kövek száma: " + Malom.playerTwo.getStones());
+		final JLabel lblKvekSzma_2 = new JLabel("Kövek száma: " + Malom.playerTwo.getStones());
 		lblKvekSzma_2.setBounds(305, 142, 101, 14);
 		imgPanel.add(lblKvekSzma_2);
 		
-		JLabel lblKvekATablan_2 = new JLabel("Kövek a táblán: " + Malom.playerTwo.getOnBoardStones());
+		final JLabel lblKvekATablan_2 = new JLabel("Kövek a táblán: " + Malom.playerTwo.getOnBoardStones());
 		lblKvekATablan_2.setBounds(305, 167, 112, 14);
 		imgPanel.add(lblKvekATablan_2);
 		
