@@ -168,10 +168,9 @@ public class MainScreen {
 			lblMostUgorhatsz_2.setVisible(false);
 		imgPanel.add(lblMostUgorhatsz_2);
 		
-		JCheckBox stepHelper = new JCheckBox("Lépés segítőt mutat");
-		stepHelper.setBounds(294, 284, 144, 23);
-		stepHelper.setSelected(true);
-		imgPanel.add(stepHelper);
+		JButton btnNewButton = new JButton("Adatb-t inicializal");
+		btnNewButton.setBounds(305, 288, 129, 23);
+		imgPanel.add(btnNewButton);
 
 		for (StoneType s : stones) {
 			imgPanel.add(s.getLabel());
