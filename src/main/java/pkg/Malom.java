@@ -10,45 +10,54 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class Malom {
-	/*** 
-	 * A tábla állapotát tartalmazza.
+	/***
+	 * A loggoláshoz szükséges {@code Logger} objektum.
 	 */
-	
 	private static Logger logger = LoggerFactory.getLogger(Malom.class);
 	
-	public static Integer[][] tabla = new Integer[8][3];
-
+	/***
+	 * A tábla állapotát tartalmazza.
+	 */
+	public static TableType t = new TableType();
+	
+	/***
+	 * A játék körökre osztását szolgálja és az aktuális játékos eldöltését segíti elő.
+	 */
+	public static Integer roundCounter = 0;
+	
+	/***
+	 * Az egyes játékos.
+	 */
+	public static PlayerType playerOne = new PlayerType();
+	
+	/***
+	 * A kettes játékos.
+	 */
+	public static PlayerType playerTwo = new PlayerType();
+	
+	
+	/***
+	 * A program fő osztálya, amely indítja a grafikus felületet és tartalmazza a játékmenethez szükséges objektumokat.
+	 * 
+	 * @param args parancssori argumentumok
+	 */
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-
-		for (Integer[] i : tabla)
-			for (int k = 0; k < i.length; k++) {
-				i[k] = 0;
-			}
-
+	
 		//System.out.println("Elindítod a grafikus felületet? (Yes / No ) ");
 		//String in = sc.nextLine().toLowerCase();
 		sc.close();
 		
-		tabla[0][0] = 1;
-		tabla[2][1] = 1;
-		tabla[2][0] = 2;
-		tabla[3][2] = 1;
+		//t.setTable(1, 1, 1);
 		
-		tabla[4][1] = 2;
-		tabla[5][1] = 2;
-		tabla[6][1] = 2;
-		
-		logger.info("a szükséges adatok betöltődtek");
-		
-		if (/*in.startsWith("y")*/true) {
-			Foablak.start(args);
+		if (/*in.startsWith("y")*/true/*false*/) {
+			MainScreen.start(args);
 		} else {
-			for (Integer[] i : tabla) {
-				for (int k = 0; k < i.length; k++) {
-					System.out.println(i[k]);
-				}
-			}
+			System.out.println("Demó mód életbe lép.");
+			
+			
 		}
+		
+		System.out.println("viszlát.");		
 	}
 }
