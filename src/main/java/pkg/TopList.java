@@ -54,11 +54,8 @@ public class TopList extends JFrame {
 
 	/**
 	 * Megnyitja az ablakot.
-	 * 
-	 * @param args
-	 *            indítási paraméterek
 	 */
-	public static void main(String[] args) {
+	public static void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -75,7 +72,7 @@ public class TopList extends JFrame {
 	 * Elkészíti a keret tartalmát.
 	 */
 	public TopList() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -98,6 +95,8 @@ public class TopList extends JFrame {
 				datar.add(new TableRowType(rs.getString(2), rs.getInt(3), rs
 						.getInt(4)));
 			}
+			
+			rs.close();
 
 		} catch (SQLException e) {
 			e.getMessage();
@@ -110,6 +109,7 @@ public class TopList extends JFrame {
 			data[i][0] = tr.name;
 			data[i][1] = tr.wins;
 			data[i][2] = tr.loses;
+			i++;
 		}
 
 		table = new JTable(data, header);

@@ -27,6 +27,8 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+ 
+import pkg.*;
 /***
  * 
  * A program fő osztálya ez indítja a grafikus felületet, vagy a parancssori alkalmazást.
@@ -69,6 +71,15 @@ public class Malom {
 	
 		//System.out.println("Elindítod a grafikus felületet? (Yes / No ) ");
 		//String in = sc.nextLine().toLowerCase();
+		
+		/*System.out.println("adja meg az első játékos nevét: ");
+		playerOne.setName(sc.nextLine());
+		
+		System.out.println("adja mega második játékos nevét: ");
+		playerTwo.setName(sc.nextLine());
+		*/
+		playerOne.setName("luke");
+		playerTwo.setName("feri");
 		sc.close();
 		
 		//t.setTable(1, 1, 1);

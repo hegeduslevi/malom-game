@@ -32,6 +32,7 @@ import javax.swing.JLabel;
 
 import org.junit.Test;
 
+import pkg.*;
 
 /***
  * Az algoritmus osztály metódusainak teszt osztálya.
@@ -139,5 +140,10 @@ public class AlgoritmusokTest {
 	public void testGetMalmok() {
 		TableType t = new TableType();
 		assertEquals(0, Algoritmusok.getMalmok(t.getTable()).size());
+	}
+	
+	@Test
+	public void testIsWanted() {
+		
 	}
 }

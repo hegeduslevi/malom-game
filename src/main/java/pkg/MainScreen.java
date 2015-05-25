@@ -23,6 +23,7 @@ package pkg;
  */
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -39,6 +40,8 @@ import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import pkg.*;
 
 /***
  * A főképernyő grafikus felületi elemeit, az eseménykezelőket, és az azokhoz tartozó {@code private} metódusokat tartalmazó osztály.
@@ -93,8 +96,8 @@ public class MainScreen {
 	private void initialize() {
 		frmMalom = new JFrame();
 		frmMalom.setResizable(false);
-		frmMalom.setTitle("Malom");
-		frmMalom.setBounds(100, 100, 450, 340);
+		frmMalom.setTitle("Malom " + Malom.playerOne.getName() + " - " + Malom.playerTwo.getName());
+		frmMalom.setBounds(100, 100, 500, 340);
 		frmMalom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ImagePanel imgPanel = new ImagePanel(new ImageIcon(this.getClass()
@@ -103,16 +106,16 @@ public class MainScreen {
 
 		frmMalom.getContentPane().add(imgPanel);
 
-		JLabel lblJtkos = new JLabel("1. játékos:");
+		JLabel lblJtkos = new JLabel("1. játékos: " + Malom.playerOne.getName());
 		lblJtkos.setForeground(Color.RED);
 		lblJtkos.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblJtkos.setBounds(305, 11, 79, 21);
+		lblJtkos.setBounds(305, 11, 179, 21);
 		imgPanel.add(lblJtkos);
 
-		JLabel lblJtkos_1 = new JLabel("2. játékos:");
+		JLabel lblJtkos_1 = new JLabel("2. játékos: " + Malom.playerTwo.getName());
 		lblJtkos_1.setForeground(Color.BLUE);
 		lblJtkos_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblJtkos_1.setBounds(305, 117, 79, 14);
+		lblJtkos_1.setBounds(305, 117, 179, 14);
 		imgPanel.add(lblJtkos_1);
 
 		JButton btnNextButton = new JButton("Következő");
@@ -120,20 +123,20 @@ public class MainScreen {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Malom.roundCounter++;
-				
 			}
 		});
-		btnNextButton.setBounds(315, 220, 119, 23);
+		btnNextButton.setBounds(305, 217, 119, 23);
 		imgPanel.add(btnNextButton);
 
 		JButton btnNewButton_1 = new JButton("Toplista");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				TopList.main(null);
+				JFrame topList = new TopList();
+				topList.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(328, 254, 89, 23);
+		btnNewButton_1.setBounds(305, 243, 89, 23);
 		imgPanel.add(btnNewButton_1);
 		
 		final JLabel lblKvekSzma_1 = new JLabel("Kövek száma: " + Malom.playerOne.getStones());
@@ -169,8 +172,30 @@ public class MainScreen {
 		imgPanel.add(lblMostUgorhatsz_2);
 		
 		JButton btnNewButton = new JButton("Adatb-t inicializal");
-		btnNewButton.setBounds(305, 288, 129, 23);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				try {
+					new XMLParser().updateDatabase();
+				} catch (SQLException e) {
+					logger.error(e.getMessage());
+				}
+			}
+		});
+		btnNewButton.setBounds(305, 277, 129, 23);
 		imgPanel.add(btnNewButton);
+		
+		JButton btnFelad = new JButton("Felad");
+		btnFelad.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Algoritmusok.felad();
+				frmMalom.dispose();
+			}
+		});
+		btnFelad.setBounds(412, 243, 72, 23);
+		imgPanel.add(btnFelad);
 
 		for (StoneType s : stones) {
 			imgPanel.add(s.getLabel());

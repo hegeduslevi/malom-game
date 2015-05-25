@@ -30,6 +30,12 @@ package pkg;
  * Játékost reprezentáló osztály.
  */
 public class PlayerType {
+	
+	/***
+	 * A játékos neve.
+	 */
+	private String name;
+	
 	/***
 	 * A játékos köveinek száma.
 	 */
@@ -93,6 +99,23 @@ public class PlayerType {
 	 * @param count kövek száma
 	 */
 	public void setOnBoardStones(int count) {
-		this.onBoard = count;
+		onBoard = count;
+	}
+	
+	/***
+	 * Beállítja a paraméterül megkapott karaktersorozatot a játékos nevének.
+	 * 
+	 * @param name a névnek szánt karaktersorozat.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	/***
+	 * Visszaadja a jétékos nevét.
+	 * @return a név
+	 */
+	public String getName() {
+		return name;
 	}
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<players>
+	<player>
+		<name>Sanya</name>
+		<wins>1</wins>
+		<loses>1</loses>
+	</player>
+	<player>
+		<name>Brandon</name>
+		<wins>2</wins>
+		<loses>3</loses>
+	</player>
+	<player>
+		<name>Peter</name>
+		<wins>0</wins>
+		<loses>1</loses>
+	</player>
+	<player>
+		<name>Cartman</name>
+		<wins>4</wins>
+		<loses>0</loses>
+	</player>
+</players>
