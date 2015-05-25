@@ -122,6 +122,7 @@ public class MainScreen {
 		btnNextButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				logger.info("next round");
 				Malom.roundCounter++;
 			}
 		});
@@ -134,6 +135,7 @@ public class MainScreen {
 			public void mouseClicked(MouseEvent arg0) {
 				JFrame topList = new TopList();
 				topList.setVisible(true);
+				logger.info("TopList windows opened.");
 			}
 		});
 		btnNewButton_1.setBounds(305, 243, 89, 23);
@@ -175,7 +177,7 @@ public class MainScreen {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
+				logger.info("Database under data upload.");
 				try {
 					new XMLParser().updateDatabase();
 				} catch (SQLException e) {
@@ -190,6 +192,7 @@ public class MainScreen {
 		btnFelad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.info(Malom.roundCounter % 2 == 1 ? "playerOne given up" : "playerTwo given up");
 				Algoritmusok.felad();
 				frmMalom.dispose();
 			}

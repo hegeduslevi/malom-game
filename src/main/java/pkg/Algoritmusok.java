@@ -282,8 +282,9 @@ public class Algoritmusok {
 
 		if (row == 7) {
 			if (isMalom(row - 2, col, row - 1, col, row, col, t.getTable()))
-				if (isMalom(row, col, row, col + 1, row, col + 2, t.getTable()))
-					return true;
+				return true;
+			if (isMalom(row, col, row, col + 1, row, col + 2, t.getTable()))
+				return true;
 		}
 
 		if (col == 2) {
@@ -390,17 +391,20 @@ public class Algoritmusok {
 	 *            a lépés céljának sora
 	 * @param col
 	 *            a lépés céljának oszlopa
+	 * @param t
+	 *            a táblázat
 	 * @return szabályos-e
 	 */
-	public boolean isValidStep(String color, int row, int col) {
+	public static boolean isValidStep(String color, int row, int col,
+			TableType t) {
 		if ("b".equals(color)) {
-			if (Malom.t.getTable()[row][col] == 0) {
+			if (t.getTable()[row][col] == 0) {
 				if (!isStoneInMalom(row, col, "c", Malom.t)) {
 					return true;
 				}
 			}
 		} else {
-			if (Malom.t.getTable()[row][col] == 0) {
+			if (t.getTable()[row][col] == 0) {
 				if (!isStoneInMalom(row, col, "b", Malom.t)) {
 					return true;
 				}
@@ -484,6 +488,7 @@ public class Algoritmusok {
 								Malom.playerOne
 										.setOnBoardStones(Malom.playerOne
 												.getOnBoardStones() + 1);
+								Malom.t.setTable(st.getRow(), st.getCol(), st.getColor() == "r" ? 1 : 2);
 							}
 			}
 		} else {
@@ -496,6 +501,7 @@ public class Algoritmusok {
 								Malom.playerTwo
 										.setOnBoardStones(Malom.playerTwo
 												.getOnBoardStones() + 1);
+								Malom.t.setTable(st.getRow(), st.getCol(), st.getColor() == "r" ? 1 : 2);
 							}
 			}
 		}
@@ -522,18 +528,14 @@ public class Algoritmusok {
 				for (TableRowType trt : data) {
 					if (trt.name.equals(Malom.playerOne.getName())) {
 						st.executeUpdate("update MALOM_DATABASE set WINS="
-								+ (trt.wins + 1)
-								+ " where NAME='"
-								+ trt.name
+								+ (trt.wins + 1) + " where NAME='" + trt.name
 								+ "'");
 						winnerBeenSet = true;
 					}
 
 					if (trt.name.equals(Malom.playerTwo.getName())) {
 						st.executeUpdate("update MALOM_DATABASE set LOSES="
-								+ (trt.loses + 1)
-								+ " where NAME='"
-								+ trt.name
+								+ (trt.loses + 1) + " where NAME='" + trt.name
 								+ "'");
 						loserBeenSet = true;
 					}
@@ -566,18 +568,14 @@ public class Algoritmusok {
 				for (TableRowType trt : data) {
 					if (trt.name.equals(Malom.playerTwo.getName())) {
 						st.executeUpdate("update MALOM_DATABASE set WINS="
-								+ (trt.wins + 1)
-								+ " where NAME='"
-								+ trt.name
+								+ (trt.wins + 1) + " where NAME='" + trt.name
 								+ "'");
 						winnerBeenSet = true;
 					}
 
 					if (trt.name.equals(Malom.playerOne.getName())) {
 						st.executeUpdate("update MALOM_DATABASE set LOSES="
-								+ (trt.loses + 1)
-								+ " where NAME='"
-								+ trt.name
+								+ (trt.loses + 1) + " where NAME='" + trt.name
 								+ "'");
 						loserBeenSet = true;
 					}

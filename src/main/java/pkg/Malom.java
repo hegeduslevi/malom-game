@@ -22,16 +22,18 @@ package pkg;
  * #L%
  */
 
-
+import java.util.List;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
- 
+
 import pkg.*;
+
 /***
  * 
- * A program fő osztálya ez indítja a grafikus felületet, vagy a parancssori alkalmazást.
+ * A program fő osztálya ez indítja a grafikus felületet, vagy a parancssori
+ * alkalmazást.
  *
  */
 public class Malom {
@@ -39,58 +41,74 @@ public class Malom {
 	 * A loggoláshoz szükséges {@code Logger} objektum.
 	 */
 	private static Logger logger = LoggerFactory.getLogger(Malom.class);
-	
+
 	/***
 	 * A tábla állapotát tartalmazza.
 	 */
 	public static TableType t = new TableType();
-	
+
 	/***
-	 * A játék körökre osztását szolgálja és az aktuális játékos eldöltését segíti elő.
+	 * A játék körökre osztását szolgálja és az aktuális játékos eldöltését
+	 * segíti elő.
 	 */
 	public static Integer roundCounter = 1;
-	
+
 	/***
 	 * Az egyes játékos.
 	 */
 	public static PlayerType playerOne = new PlayerType();
-	
+
 	/***
 	 * A kettes játékos.
 	 */
 	public static PlayerType playerTwo = new PlayerType();
-	
-	
+
 	/***
-	 * A program fő osztálya, amely indítja a grafikus felületet és tartalmazza a játékmenethez szükséges objektumokat.
+	 * A program fő osztálya, amely indítja a grafikus felületet és tartalmazza
+	 * a játékmenethez szükséges objektumokat.
 	 * 
-	 * @param args parancssori argumentumok
+	 * @param args
+	 *            parancssori argumentumok
 	 */
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 	
-		//System.out.println("Elindítod a grafikus felületet? (Yes / No ) ");
-		//String in = sc.nextLine().toLowerCase();
+		System.out.println("Elindítod a grafikus felületet? (Yes / No ) ");
+		String in = sc.nextLine().toLowerCase();
 		
-		/*System.out.println("adja meg az első játékos nevét: ");
-		playerOne.setName(sc.nextLine());
-		
-		System.out.println("adja mega második játékos nevét: ");
-		playerTwo.setName(sc.nextLine());
-		*/
-		playerOne.setName("luke");
-		playerTwo.setName("feri");
-		sc.close();
-		
-		//t.setTable(1, 1, 1);
-		
-		if (/*in.startsWith("y")*/true/*false*/) {
+		if (in.startsWith("y")/*true*//*false*/) {
+			System.out.println("adja meg az első játékos nevét: ");
+			playerOne.setName(sc.nextLine());
+			
+			System.out.println("adja mega második játékos nevét: ");
+			playerTwo.setName(sc.nextLine());
+			
 			MainScreen.start(args);
 		} else {
 			System.out.println("Demó mód életbe lép.");
 			
+			playerOne.setName("luke");
+			playerTwo.setName("feri");
 			
+			t.setTable(0,1,1);
+			t.setTable(2, 1, 2);
+			t.setTable(3, 1, 1);
+			t.setTable(2, 2, 2);
+			t.setTable(0,2, 1);
+			t.setTable(2, 0, 2);
+			
+			List<Integer> positions = Algoritmusok.getMalmok(t.getTable());
+			
+			for (int i : positions) {
+				System.out.println(i);
+			}
+			
+			Algoritmusok.felad();
+			
+			System.out.println("Ranglista megnyílt.");
 		}
+		
+		sc.close();
 		
 		System.out.println("viszlát.");		
 	}

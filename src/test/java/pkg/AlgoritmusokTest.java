@@ -25,6 +25,8 @@ package pkg;
 
 import static org.junit.Assert.*;
 
+import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -142,8 +144,41 @@ public class AlgoritmusokTest {
 		assertEquals(0, Algoritmusok.getMalmok(t.getTable()).size());
 	}
 	
+	/***
+	 * A megfelelő követ megkereső metódus tesztje.
+	 */
 	@Test
-	public void testIsWanted() {
+	public void testIsValidStep() {
+		TableType t = new TableType();
+		t.setTable(1, 1, 1);
+		assertEquals(false, Algoritmusok.isValidStep("b", 1, 1, t));
+	}
+	
+	/***
+	 * A kattintás helyességét ellenőrző metódus tesztje.
+	 */
+	@Test
+	public void testIsClicked() {
+		StoneType st = new StoneType("n", "r", true, 2, 2);
+		long a = 1;
+		MouseEvent me = new MouseEvent(st.getLabel() ,1,a,1,195,125,1,false);
+		assertEquals(true, Algoritmusok.isClicked(st, me));
+	}
+	
+	/***
+	 * A tábla alapján a grafikus felületet frissító metódus tesztje.
+	 */
+	@Test
+	public void testUpdateTable() {
+		Algoritmusok.updateTable();
+		boolean hasVisible = false;
+		
+		for (StoneType st : MainScreen.stones) {
+			if (st.getVisible() == true) 
+				hasVisible = true;
+		}
+			
+		assertEquals(false, hasVisible);
 		
 	}
 }
