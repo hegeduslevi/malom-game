@@ -110,6 +110,5 @@ public class Malom {
 		
 		sc.close();
 		
-		System.out.println("viszlát.");		
 	}
 }
