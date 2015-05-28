@@ -1,4 +1,4 @@
-package pkg;
+package GUI;
 
 /*
  * #%L
@@ -23,6 +23,8 @@ package pkg;
  */
 
 
+import game.Malom;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -41,13 +43,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import pkg.*;
+import service.*;
 
 /***
  * A főképernyő grafikus felületi elemeit, az eseménykezelőket, és az azokhoz tartozó {@code private} metódusokat tartalmazó osztály.
  */
 public class MainScreen {
-
+	/**
+	 * A játék rendszerét felölelő osztály.
+	 */
+	public static Malom malom;
 	/***
 	 * A loggoláshoz szükséges {@code Logger} objektum.
 	 */
@@ -63,6 +68,9 @@ public class MainScreen {
 	 */
 	public static final List<StoneType> stones = Algoritmusok.getStones();
 
+	public static MouseEvent oldMe;
+	public static MouseEvent Me;
+	
 	/**
 	 * Elindítja az alkalmazást.
 	 * 
@@ -85,11 +93,12 @@ public class MainScreen {
 	 * Elkészíti az alkalmazást.
 	 */
 	public MainScreen() {
+		malom = new Malom();
+		
 		initialize();
 	}
 
 	
-
 	/***
 	 * Elkészíti a keret tartalmát a megjelenítésre.
 	 */
@@ -97,7 +106,7 @@ public class MainScreen {
 		frmMalom = new JFrame();
 		frmMalom.setResizable(false);
 		frmMalom.setTitle("Malom " + Malom.playerOne.getName() + " - " + Malom.playerTwo.getName());
-		frmMalom.setBounds(100, 100, 500, 340);
+		frmMalom.setBounds(100, 100, 550, 340);
 		frmMalom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ImagePanel imgPanel = new ImagePanel(new ImageIcon(this.getClass()
@@ -126,7 +135,7 @@ public class MainScreen {
 				Malom.roundCounter++;
 			}
 		});
-		btnNextButton.setBounds(305, 217, 119, 23);
+		btnNextButton.setBounds(305, 217, 129, 23);
 		imgPanel.add(btnNextButton);
 
 		JButton btnNewButton_1 = new JButton("Toplista");
@@ -138,7 +147,7 @@ public class MainScreen {
 				logger.info("TopList windows opened.");
 			}
 		});
-		btnNewButton_1.setBounds(305, 243, 89, 23);
+		btnNewButton_1.setBounds(305, 243, 129, 23);
 		imgPanel.add(btnNewButton_1);
 		
 		final JLabel lblKvekSzma_1 = new JLabel("Kövek száma: " + Malom.playerOne.getStones());
@@ -197,7 +206,7 @@ public class MainScreen {
 				frmMalom.dispose();
 			}
 		});
-		btnFelad.setBounds(412, 243, 72, 23);
+		btnFelad.setBounds(444, 217, 89, 23);
 		imgPanel.add(btnFelad);
 
 		for (StoneType s : stones) {
@@ -221,7 +230,9 @@ public class MainScreen {
 				}
 
 				if (arg0.getButton() == MouseEvent.BUTTON3) {
-					Algoritmusok.putStone(arg0); 
+					Algoritmusok.putStone(arg0);
+					
+					
 					frmMalom.repaint();
 					lblKvekSzma_1.setText("Kövek száma: " + Malom.playerOne.getStones());
 					lblKvekATablan_1.setText("Kövek a táblán: " + Malom.playerOne.getOnBoardStones());

@@ -35,6 +35,9 @@ import java.sql.Statement;
 
 import org.junit.Test;
 
+import service.ConnectionHandler;
+import service.XMLParser;
+
 /**
  *	XML feldolgozó osztyál tesztje.
  */

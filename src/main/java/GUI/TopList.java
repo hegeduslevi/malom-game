@@ -1,4 +1,4 @@
-package pkg;
+package GUI;
 
 /*
  * #%L
@@ -37,6 +37,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import service.ConnectionHandler;
 
 /***
  * Az eredmény táblázat megjelenítésére szolgáló felület.

@@ -103,7 +103,7 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>pkg.Malom</mainClass>
+									<mainClass>CLI.Launcher</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>

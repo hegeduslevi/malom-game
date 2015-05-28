@@ -24,6 +24,8 @@ package pkg;
 
 
 import static org.junit.Assert.*;
+import game.Malom;
+import game.TableType;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;
@@ -34,54 +36,18 @@ import javax.swing.JLabel;
 
 import org.junit.Test;
 
-import pkg.*;
+import GUI.Algoritmusok;
+import GUI.MainScreen;
+import GUI.StoneType;
+import service.*;
 
 /***
  * Az algoritmus osztály metódusainak teszt osztálya.
  */
 public class AlgoritmusokTest {
 
-	/***
-	 * Üres tábla esetén malmok számát teszteli.
-	 */
-	@Test
-	public void testEmptyTable() {
-		TableType t = new TableType();
-		List<Integer> li= Algoritmusok.getMalmok(t.getTable());
-		assertEquals(0, li.size());
-	}
 	
-	/***
-	 * Egy sorban található malom helyzetek tesztje
-	 */
-	@Test
-	public void testRowMil() {
-		TableType t = new TableType();
-		t.setTable(2, 0, 1);
-		t.setTable(2, 1, 1);
-		t.setTable(2, 2, 1);
-		
-		List<Integer> li = Algoritmusok.getMalmok(t.getTable());
-		for (int i : li) {
-			assertEquals(2, i);
-		}
-	}
 	
-	/***
-	 * Egy oszlopban található malom helyzetek tesztje.
-	 */
-	@Test
-	public void testColMil() {
-		TableType t = new TableType();
-		t.setTable(5, 1, 1);
-		t.setTable(6, 1, 1);
-		t.setTable(7, 1, 1);
-		
-		List<Integer> li = Algoritmusok.getMalmok(t.getTable());
-		for (int i : li) {
-			assertEquals(12, i);
-		}
-	}
 	
 	/*** 
 	 * A követ reprezentáló {@code JLabel} típusú objektum készítésének a tesztje.
@@ -111,48 +77,6 @@ public class AlgoritmusokTest {
 		assertEquals(120, Algoritmusok.getStones().size());
 	}
 
-	/***
-	 * A malom helyzetek felismerését tesztelő metódus. 
-	 */
-	@Test
-	public void testIsMalom() {
-		TableType t = new TableType();
-		t.setTable(0, 0, 1);
-		t.setTable(0, 1, 1);
-		t.setTable(0, 2, 1);
-		assertEquals(true, Algoritmusok.isMalom(0,0, 0,1, 0,2, t.getTable()));
-	}
-	
-	/***
-	 * Egy kőről a malom helyzetet eldöntő algoritmus tesztje.
-	 */
-	@Test
-	public void testIsStoneInMalom() {
-		TableType t = new TableType();
-		t.setTable(0, 1, 1);
-		t.setTable(1, 1, 1);
-		t.setTable(2, 1, 1);
-		assertEquals(true, Algoritmusok.isStoneInMalom(1,1, "r", t));
-	}
-	
-	/***
-	 * A malom helyzeteket visszaadó metódus tesztje.
-	 */
-	@Test
-	public void testGetMalmok() {
-		TableType t = new TableType();
-		assertEquals(0, Algoritmusok.getMalmok(t.getTable()).size());
-	}
-	
-	/***
-	 * A megfelelő követ megkereső metódus tesztje.
-	 */
-	@Test
-	public void testIsValidStep() {
-		TableType t = new TableType();
-		t.setTable(1, 1, 1);
-		assertEquals(false, Algoritmusok.isValidStep("b", 1, 1, t));
-	}
 	
 	/***
 	 * A kattintás helyességét ellenőrző metódus tesztje.

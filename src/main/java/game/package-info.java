@@ -1,7 +1,7 @@
 /**
- * 
+ * A malom játék grafikus felülettel ellátot implementációjának játékszabályait és az állapotteret tartalmazó osztályok gyűjtő csomagja.
  */
-package pkg;
+package game;
 
 /*
  * #%L
@@ -24,30 +24,3 @@ package pkg;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
-
-import static org.junit.Assert.assertEquals;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import org.junit.Test;
-
-import service.ConnectionHandler;
-
-/**
- * Az adatbázis kapcsolat felépítéséért felelős osztály tesztje.
- */
-public class ConnectionHandlerTest {
-	/***
-	 * Az osztály konstruktorának tesztje.
-	 * @throws SQLException ha nem sikerült a kapcsolódás az adatbázishoz
-	 */
-	@Test
-	public void testConnectionHandler() throws SQLException {
-		Connection conn = ConnectionHandler.getConnection();
-		
-		assertEquals(true, conn.isValid(30));
-	}
-	
-}

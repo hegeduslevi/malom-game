@@ -1,4 +1,4 @@
-package pkg;
+package GUI;
 
 /*
  * #%L
@@ -23,35 +23,35 @@ package pkg;
  */
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 /***
- * A kapcsolat felépítéséhez szükséges osztály.
+ * JTable sorainak elkészítéséhez szükséges osztály. Egy játékos adatait tartalmaza.
  */
-public class ConnectionHandler {
-	
+public class TableRowType {
 	/***
-	 * Az osztály osztályváltozója amely az adatbázis kapcsolatot tartalmazza.
+	 * A játékos neve.
 	 */
-	static Connection conn;
+	public String name;
 	
 	/***
-	 * Az adatbázissal a kapcsolatot felépítő osztály.
+	 * A játékos győzelmeinek a száma.
+	 */
+	public int wins;
+	
+	/***
+	 * A játékos vereségeinek a száma.
+	 */
+	public int loses;
+	
+	/***
+	 * Az osztály konstruktora.
 	 * 
-	 * @return a kapcsolat
+	 * @param s a játékos neve
+	 * @param w győzelmek száma
+	 * @param l vereségek száma
 	 */
-	public static Connection getConnection() {
-		try {
-		if (conn == null || conn.isClosed()) {
-			
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g", "h_f0lhc6", "berkogep");
-			
-		}
-		} catch (SQLException e) {
-			e.getMessage();
-		}
-		
-		return conn;
+	public TableRowType(String s, int w, int l) {
+		this.name = s;
+		this.wins = w;
+		this.loses = l;
 	}
 }

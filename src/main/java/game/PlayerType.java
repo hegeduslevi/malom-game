@@ -1,7 +1,7 @@
 /**
  * 
  */
-package pkg;
+package game;
 
 /*
  * #%L
@@ -113,9 +113,37 @@ public class PlayerType {
 	
 	/***
 	 * Visszaadja a jétékos nevét.
+	 * 
 	 * @return a név
 	 */
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * Megmondja egy játékosról hogy tehet-e le követ a táblára.
+	 * 
+	 * @return igaz ha tehet, hamis egyébként 
+	 */
+	public boolean canPut() {
+		if ((stones - onBoard) > 3)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Eldönti a játékosról hogy léphet-e a táblán.
+	 * 
+	 * @return igaz ha léphet,  hamis egyébként
+	 */
+	public boolean canMove() {
+		if ((stones == onBoard) && stones > 3)
+			return true;
+		else
+			return false;
+	}
+	
+	
+	
 }

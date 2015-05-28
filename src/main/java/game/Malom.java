@@ -1,4 +1,4 @@
-package pkg;
+package game;
 
 /*
  * #%L
@@ -28,7 +28,8 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pkg.*;
+import GUI.MainScreen;
+import service.*;
 
 /***
  * 
@@ -40,18 +41,18 @@ public class Malom {
 	/***
 	 * A loggoláshoz szükséges {@code Logger} objektum.
 	 */
-	private static Logger logger = LoggerFactory.getLogger(Malom.class);
+	private static Logger logger;
 
 	/***
 	 * A tábla állapotát tartalmazza.
 	 */
-	public static TableType t = new TableType();
+	public static TableType t;
 
 	/***
 	 * A játék körökre osztását szolgálja és az aktuális játékos eldöltését
 	 * segíti elő.
 	 */
-	public static Integer roundCounter = 1;
+	public static Integer roundCounter;
 
 	/***
 	 * Az egyes játékos.
@@ -63,52 +64,23 @@ public class Malom {
 	 */
 	public static PlayerType playerTwo = new PlayerType();
 
-	/***
-	 * A program fő osztálya, amely indítja a grafikus felületet és tartalmazza
-	 * a játékmenethez szükséges objektumokat.
-	 * 
-	 * @param args
-	 *            parancssori argumentumok
+	/**
+	 * Az aktuális malom helyezetek listája.
 	 */
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static List<Integer[]> malmok;
 	
-		System.out.println("Elindítod a grafikus felületet? (Yes / No ) ");
-		String in = sc.nextLine().toLowerCase();
-		
-		if (in.startsWith("y")/*true*//*false*/) {
-			System.out.println("adja meg az első játékos nevét: ");
-			playerOne.setName(sc.nextLine());
-			
-			System.out.println("adja mega második játékos nevét: ");
-			playerTwo.setName(sc.nextLine());
-			
-			MainScreen.start(args);
-		} else {
-			System.out.println("Demó mód életbe lép.");
-			
-			playerOne.setName("luke");
-			playerTwo.setName("feri");
-			
-			t.setTable(0,1,1);
-			t.setTable(2, 1, 2);
-			t.setTable(3, 1, 1);
-			t.setTable(2, 2, 2);
-			t.setTable(0,2, 1);
-			t.setTable(2, 0, 2);
-			
-			List<Integer> positions = Algoritmusok.getMalmok(t.getTable());
-			
-			for (int i : positions) {
-				System.out.println(i);
-			}
-			
-			Algoritmusok.felad();
-			
-			System.out.println("Ranglista megnyílt.");
-		}
-		
-		sc.close();
-		
+	/**
+	 * Az előző lépéskor fennálló malom helyzetek listája.
+	 */
+	public static List<Integer[]> previousMalmok;
+	
+	/**
+	 * Az összefogó osztály konstruktora.
+	 */
+	public Malom() {
+		logger  = LoggerFactory.getLogger(Malom.class);
+		t = new TableType();
+		roundCounter = 1;
 	}
+	
 }

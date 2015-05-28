@@ -28,6 +28,7 @@ package pkg;
 
 import org.junit.Test;
 
+import GUI.StoneType;
 import static org.junit.Assert.*;
 
 /**

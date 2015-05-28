@@ -1,7 +1,7 @@
 /**
  * 
  */
-package pkg;
+package service;
 
 /*
  * #%L
@@ -26,8 +26,8 @@ package pkg;
  */
 
 
-import java.io.File;
-import java.io.FileInputStream;
+import game.Malom;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -44,7 +44,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import pkg.*;
 
 /**
  * XML fálj feldolgozáshoz szükséges osztály.

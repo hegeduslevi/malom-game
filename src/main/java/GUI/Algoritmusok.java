@@ -1,4 +1,4 @@
-package pkg;
+package GUI;
 
 /*
  * #%L
@@ -22,6 +22,10 @@ package pkg;
  * #L%
  */
 
+import game.Malom;
+import game.MalomOperator;
+import game.TableType;
+
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,7 +39,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import pkg.*;
+import service.*;
 
 /***
  * Az alkalmazások működéséhez szükséges algoritmusok gyűjtő osztálya.
@@ -216,131 +220,6 @@ public class Algoritmusok {
 	}
 
 	/***
-	 * Eldönti 3 kőről, hogy malom állásban vannak-e.
-	 * 
-	 * @param r1
-	 *            a reprezentáló szerekezetben az első kő sorának száma
-	 * @param c1
-	 *            a reprezentáló szerekezetben az első kő oszlopának száma
-	 * @param r2
-	 *            a reprezentáló szerekezetben az második kő sorának száma
-	 * @param c2
-	 *            a reprezentáló szerekezetben az második kő oszlopának száma
-	 * @param r3
-	 *            a reprezentáló szerekezetben az harmadik kő sorának száma
-	 * @param c3
-	 *            a reprezentáló szerekezetben az harmadik kő oszlopának száma
-	 * @param table
-	 *            a reprezentáló szerkezet
-	 * 
-	 * @return malom állásban áll-e a három kő.
-	 */
-	public static boolean isMalom(int r1, int c1, int r2, int c2, int r3,
-			int c3, Integer[][] table) {
-		if (table[r1][c1] != 0) {
-			if (table[r1][c1] == table[r2][c2])
-				if (table[r2][c2] == table[r3][c3])
-					return true;
-		}
-		return false;
-	}
-
-	/***
-	 * Megmondja egy kőről, hogy az malomban van-e.
-	 * 
-	 * @param row
-	 *            a kő sor száma
-	 * @param col
-	 *            a kő oszlop száma
-	 * @param color
-	 *            a kő színe
-	 * @param t
-	 *            a táblázat amelyben az adatok vannak
-	 * @return malomban van-e
-	 */
-	public static boolean isStoneInMalom(int row, int col, String color,
-			TableType t) {
-		if ((row >= 1 && row <= 6) && (col >= 1 && col <= 6)) {
-			if (isMalom(row - 1, col, row, col, row + 1, col, t.getTable()))
-				return true;
-			if (isMalom(row, col - 1, row, col, row, col + 1, t.getTable()))
-				return true;
-		}
-		if (row == 0) {
-			if (isMalom(row, col, row + 1, col, row + 2, col, t.getTable()))
-				return true;
-			if (isMalom(row, col - 1, row, col, row, col + 1, t.getTable()))
-				return true;
-		}
-
-		if (col == 0) {
-			if (isMalom(row - 1, col, row, col, row + 1, col, t.getTable()))
-				return true;
-			if (isMalom(row, col, row, col + 1, row, col + 2, t.getTable()))
-				return true;
-		}
-
-		if (row == 7) {
-			if (isMalom(row - 2, col, row - 1, col, row, col, t.getTable()))
-				return true;
-			if (isMalom(row, col, row, col + 1, row, col + 2, t.getTable()))
-				return true;
-		}
-
-		if (col == 2) {
-			if (isMalom(row - 1, col, row, col, row + 1, col, t.getTable()))
-				return true;
-			if (isMalom(row, col - 2, row, col - 1, row, col, t.getTable()))
-				return true;
-		}
-		return false;
-
-	}
-
-	/***
-	 * Megadja a táblán előforduló malom állapotok listját.
-	 * 
-	 * @param t
-	 *            a tábla állapotát tároló objektum
-	 * @return a malom helyzetek számokkal reprezentált listája.
-	 */
-	public static List<Integer> getMalmok(Integer[][] t) {
-		List<Integer> res = new ArrayList<Integer>();
-
-		for (int i = 0; i < 8; i++) {
-			if (isMalom(i, 0, i, 1, i, 2, t)) {
-				res.add(i);
-			}
-		}
-
-		if (isMalom(0, 0, 3, 0, 7, 0, t))
-			res.add(8); // 1. oszlop
-
-		if (isMalom(1, 0, 3, 1, 6, 0, t))
-			res.add(9); // 2. oszlop
-
-		if (isMalom(2, 0, 3, 2, 5, 0, t))
-			res.add(10); // 3. oszlop
-
-		if (isMalom(0, 1, 1, 1, 2, 1, t))
-			res.add(11); // 4. oszlop felső
-
-		if (isMalom(5, 1, 6, 1, 7, 0, t))
-			res.add(12); // 4. oszlop alsó
-
-		if (isMalom(2, 2, 4, 0, 5, 2, t))
-			res.add(13); // 5. oszlop
-
-		if (isMalom(1, 2, 4, 1, 6, 2, t))
-			res.add(14); // 6. oszlop
-
-		if (isMalom(0, 2, 4, 2, 7, 2, t))
-			res.add(15); // 7. oszlop
-
-		return res;
-	}
-
-	/***
 	 * Eldönti egy kőről, hogy azt a követ keressük-e.
 	 * 
 	 * @param st
@@ -380,37 +259,6 @@ public class Algoritmusok {
 				}
 			}
 		}
-	}
-
-	/***
-	 * Megadja, hogy egy lépés szabályos-e.
-	 * 
-	 * @param color
-	 *            a kő színe
-	 * @param row
-	 *            a lépés céljának sora
-	 * @param col
-	 *            a lépés céljának oszlopa
-	 * @param t
-	 *            a táblázat
-	 * @return szabályos-e
-	 */
-	public static boolean isValidStep(String color, int row, int col,
-			TableType t) {
-		if ("b".equals(color)) {
-			if (t.getTable()[row][col] == 0) {
-				if (!isStoneInMalom(row, col, "c", Malom.t)) {
-					return true;
-				}
-			}
-		} else {
-			if (t.getTable()[row][col] == 0) {
-				if (!isStoneInMalom(row, col, "b", Malom.t)) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	/***
@@ -471,38 +319,27 @@ public class Algoritmusok {
 		return false;
 	}
 
-	/***
-	 * A táblára tesz egy követ.
-	 * 
-	 * @param me
-	 *            az egér esemény
-	 */
 	public static void putStone(MouseEvent me) {
-		if (Malom.roundCounter % 2 == 1) {
-			for (StoneType st : MainScreen.stones) {
-				if (!st.getVisible())
-					if (isClicked(st, me))
-						if ("r".equals(st.getColor()))
-							if ("n".equals(st.getState())) {
+		
+		for (StoneType st : MainScreen.stones) {
+			if (MainScreen.malom.roundCounter % 2 == 1) {
+				if (st.getState().equals("n"))
+					if (st.getColor().equals("r"))
+						if (isClicked(st, me)) {
+							MalomOperator mo = new MalomOperator(st.getCol(), st.getRow(),
+									MainScreen.malom.t);
+							if (mo.canPut(
+									MainScreen.malom.roundCounter,
+									MainScreen.malom.playerOne,
+									MainScreen.malom.playerTwo)) {
 								st.setVisible(true);
-								Malom.playerOne
-										.setOnBoardStones(Malom.playerOne
-												.getOnBoardStones() + 1);
-								Malom.t.setTable(st.getRow(), st.getCol(), st.getColor() == "r" ? 1 : 2);
+								mo.operatorPut(
+										MainScreen.malom.roundCounter,
+										MainScreen.malom.playerOne,
+										MainScreen.malom.playerTwo);
 							}
-			}
-		} else {
-			for (StoneType st : MainScreen.stones) {
-				if (!st.getVisible())
-					if (isClicked(st, me))
-						if ("b".equals(st.getColor()))
-							if ("n".equals(st.getState())) {
-								st.setVisible(true);
-								Malom.playerTwo
-										.setOnBoardStones(Malom.playerTwo
-												.getOnBoardStones() + 1);
-								Malom.t.setTable(st.getRow(), st.getCol(), st.getColor() == "r" ? 1 : 2);
-							}
+
+						}
 			}
 		}
 	}

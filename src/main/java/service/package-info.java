@@ -1,7 +1,7 @@
 /**
- * A malom játék grafikus felülettel ellátot implementációjához tartalmazó osztályokat tartalmazó csomag.
+ * A malom játék grafikus felülettel ellátot implementációjának adatkapcsolatai funkcióit szolgáltató osztályokat tartalmazó csomag.
  */
-package pkg;
+package service;
 
 /*
  * #%L

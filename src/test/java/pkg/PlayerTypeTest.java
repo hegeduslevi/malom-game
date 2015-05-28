@@ -26,7 +26,10 @@ package pkg;
  */
 
 
+import game.PlayerType;
+
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**

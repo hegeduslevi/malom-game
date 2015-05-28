@@ -1,7 +1,4 @@
-/**
- * 
- */
-package pkg;
+package service;
 
 /*
  * #%L
@@ -26,28 +23,35 @@ package pkg;
  */
 
 
-import static org.junit.Assert.assertEquals;
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import org.junit.Test;
-
-import service.ConnectionHandler;
-
-/**
- * Az adatbázis kapcsolat felépítéséért felelős osztály tesztje.
+/***
+ * A kapcsolat felépítéséhez szükséges osztály.
  */
-public class ConnectionHandlerTest {
-	/***
-	 * Az osztály konstruktorának tesztje.
-	 * @throws SQLException ha nem sikerült a kapcsolódás az adatbázishoz
-	 */
-	@Test
-	public void testConnectionHandler() throws SQLException {
-		Connection conn = ConnectionHandler.getConnection();
-		
-		assertEquals(true, conn.isValid(30));
-	}
+public class ConnectionHandler {
 	
+	/***
+	 * Az osztály osztályváltozója amely az adatbázis kapcsolatot tartalmazza.
+	 */
+	static Connection conn;
+	
+	/***
+	 * Az adatbázissal a kapcsolatot felépítő osztály.
+	 * 
+	 * @return a kapcsolat
+	 */
+	public static Connection getConnection() {
+		try {
+		if (conn == null || conn.isClosed()) {
+			
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g", "h_f0lhc6", "berkogep");
+			
+		}
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		
+		return conn;
+	}
 }
