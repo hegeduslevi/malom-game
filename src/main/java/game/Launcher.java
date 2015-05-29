@@ -45,9 +45,32 @@ public class Launcher {
 		String answ = sc.nextLine();
 		
 		if (answ.equals("igen")) {
-			game.MainScreen.start(args);
+			String[] names = new String[2];
+			
+			System.out.println("1. játékos neve:"); 
+			names[0] = sc.nextLine();
+			
+			System.out.println("2. játékos neve:"); 
+			names[1] = sc.nextLine();
+			
+			game.MainScreen.start(names);
+			
 		} else {
-			//TODO
+			System.out.println("Demó mód életbe lép.");
+			
+			Malom m = new Malom();
+			
+			m.playerOne.setName("Sanya");
+			m.playerTwo.setName("Brandon");
+			
+			m.t.setTable(1, 2, 1);
+			m.roundCounter++;
+			
+			m.t.setTable(1, 1, 2);
+			m.roundCounter++;
+			
+			System.out.println("Sanya feladja a játékot. \n\nAdatok feldolgozása folyamatban");
+			Algoritmusok.felad("cmd");
 		}
 		
 

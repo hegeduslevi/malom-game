@@ -659,5 +659,102 @@ public class Algoritmusok {
 		JFrame topList = new TopList();
 		topList.setVisible(true);
 	}
+	
+	/***
+	 * A játék feladásakor frissíti az adatbázist.
+	 */
+	public static void felad(String c) {
+		if (Malom.roundCounter % 2 == 1) {
+			try {
+				Connection conn = ConnectionHandler.getConnection();
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery("select * from MALOM_DATABASE");
+
+				List<TableRowType> data = new LinkedList<TableRowType>();
+				while (rs.next()) {
+					data.add(new TableRowType(rs.getString(2), rs.getInt(3), rs
+							.getInt(4)));
+				}
+
+				Boolean winnerBeenSet = false;
+				Boolean loserBeenSet = false;
+				for (TableRowType trt : data) {
+					if (trt.name.equals(Malom.playerOne.getName())) {
+						st.executeUpdate("update MALOM_DATABASE set WINS="
+								+ (trt.wins + 1) + " where NAME='" + trt.name
+								+ "'");
+						winnerBeenSet = true;
+					}
+
+					if (trt.name.equals(Malom.playerTwo.getName())) {
+						st.executeUpdate("update MALOM_DATABASE set LOSES="
+								+ (trt.loses + 1) + " where NAME='" + trt.name
+								+ "'");
+						loserBeenSet = true;
+					}
+				}
+				if (!winnerBeenSet)
+					st.execute("insert INTO MALOM_DATABASE (ID, NAME, WINS, LOSES) VALUES (seq_player.nextval, '"
+							+ Malom.playerOne.getName() + "',1,0)");
+				if (!loserBeenSet)
+					st.execute("insert INTO MALOM_DATABASE (ID, NAME, WINS, LOSES) VALUES (seq_player.nextval, '"
+							+ Malom.playerTwo.getName() + "',0,1)");
+
+				st.executeQuery("commit");
+				
+				for (TableRowType trt : data) {
+					System.out.println(trt.name + " " + trt.wins + " " + trt.loses);
+				}
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		} else {
+			try {
+				Connection conn = ConnectionHandler.getConnection();
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery("select * from MALOM_DATABASE");
+
+				List<TableRowType> data = new LinkedList<TableRowType>();
+				while (rs.next()) {
+					data.add(new TableRowType(rs.getString(2), rs.getInt(3), rs
+							.getInt(4)));
+				}
+
+				Boolean winnerBeenSet = false;
+				Boolean loserBeenSet = false;
+				for (TableRowType trt : data) {
+					if (trt.name.equals(Malom.playerTwo.getName())) {
+						st.executeUpdate("update MALOM_DATABASE set WINS="
+								+ (trt.wins + 1) + " where NAME='" + trt.name
+								+ "'");
+						winnerBeenSet = true;
+					}
+
+					if (trt.name.equals(Malom.playerOne.getName())) {
+						st.executeUpdate("update MALOM_DATABASE set LOSES="
+								+ (trt.loses + 1) + " where NAME='" + trt.name
+								+ "'");
+						loserBeenSet = true;
+					}
+				}
+				if (!winnerBeenSet)
+					st.execute("insert INTO MALOM_DATABASE (ID, NAME, WINS, LOSES) VALUES (seq_player.nextval, '"
+							+ Malom.playerTwo.getName() + "',1,0)");
+				if (!loserBeenSet)
+					st.execute("insert INTO MALOM_DATABASE (ID, NAME, WINS, LOSES) VALUES (seq_player.nextval, '"
+							+ Malom.playerOne.getName() + "',0,1)");
+
+				st.executeQuery("commit");
+				
+				for (TableRowType trt : data) {
+					System.out.println(trt.name + " " + trt.wins + " " + trt.loses);
+				}
+				
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		}
+		
+	}
 
 }

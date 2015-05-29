@@ -92,7 +92,7 @@ public class MainScreen {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainScreen window = new MainScreen();
+					MainScreen window = new MainScreen(args[0], args[1]);
 					window.frmMalom.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -104,8 +104,10 @@ public class MainScreen {
 	/**
 	 * Elkészíti az alkalmazást.
 	 */
-	public MainScreen() {
+	public MainScreen(String p1, String p2) {
 		malom = new Malom();
+		malom.playerOne.setName(p1); 
+		malom.playerTwo.setName(p2);
 
 		initialize();
 	}
