@@ -164,5 +164,26 @@ public class StoneType {
 		this.label = Algoritmusok.createStone(row, col, color, state);
 		this.label.setVisible(visible);
 	}
+	
+	/***
+	 * Két kötítusú elemről megmondja hogy egyeznek-e. 
+	 * 
+	 * @param obj az összehasonlítandó elem
+	 * @return ha a sor, és oszlop szám, a szín, és az állapot egyezik akkor igaz, hamis egyébként  
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof StoneType) {
+			StoneType o = (StoneType)obj;
+			
+			if (o.col == this.col)
+				if (o.row == this.row) 
+					if (o.color == this.color)
+						if (o.state == this.state)
+							return true;
+				
+		}
+		return false;
+	}
 
 }

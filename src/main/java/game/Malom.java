@@ -81,6 +81,8 @@ public class Malom {
 		logger  = LoggerFactory.getLogger(Malom.class);
 		t = new TableType();
 		roundCounter = 1;
+		malmok = new MalomOperator(t).getMalmok();
+		previousMalmok = new MalomOperator(t).getMalmok();
 	}
 	
 }

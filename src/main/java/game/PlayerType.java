@@ -126,7 +126,7 @@ public class PlayerType {
 	 * @return igaz ha tehet, hamis egyébként 
 	 */
 	public boolean canPut() {
-		if ((stones - onBoard) > 3)
+		if ((stones - onBoard) > 0)
 			return true;
 		else
 			return false;

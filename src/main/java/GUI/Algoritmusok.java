@@ -38,11 +38,13 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import service.*;
 
 /***
- * Az alkalmazások működéséhez szükséges algoritmusok gyűjtő osztálya.
+ * Az alkalmazás grafikus felületének működéséhez szükséges algoritmusok gyűjtő
+ * osztálya.
  *
  */
 public class Algoritmusok {
@@ -247,53 +249,33 @@ public class Algoritmusok {
 	/***
 	 * A tábla állapota alapján frissíti a grafikus felületet.
 	 */
-	public static void updateTable() {
-		for (int r = 0; r < 8; r++) {
-			for (int c = 0; c < 3; c++) {
-				if (Malom.t.getTable()[r][c] != 0) {
-					for (StoneType st : MainScreen.stones) {
-						if (isWanted(st, r, c, Malom.t)) {
-							st.setVisible(true);
-						}
-					}
-				}
-			}
-		}
-	}
+	/*
+	 * public static void updateTable() { for (int r = 0; r < 8; r++) { for (int
+	 * c = 0; c < 3; c++) { if (Malom.t.getTable()[r][c] != 0) { for (StoneType
+	 * st : MainScreen.stones) { if (isWanted(st, r, c, Malom.t)) {
+	 * st.setVisible(true); } } } } } }
+	 */
 
 	/***
 	 * Megmutatja mely pozíciókra léphet, vagy tehet követ a játékos.
 	 */
-	public static void showAvailableSpots() {
-		if (Malom.roundCounter % 2 == 1) {
-			if ((Malom.playerOne.getOnBoardStones() != Malom.playerOne
-					.getStones()) || Malom.playerOne.canJump()) {
-				for (int r = 0; r < 8; r++)
-					for (int c = 0; c < 3; c++)
-						if (Malom.t.getTable()[r][c] == 0)
-							for (StoneType st : MainScreen.stones)
-								if (st.getRow() == r && st.getCol() == c)
-									if (st.getState() == "p")
-										st.setVisible(true);
-				/*
-				 * } else {
-				 * 
-				 * }
-				 */
-			}
-		} else {
-			if ((Malom.playerTwo.getOnBoardStones() != Malom.playerTwo
-					.getStones()) || Malom.playerTwo.canJump()) {
-				for (int r = 0; r < 8; r++)
-					for (int c = 0; c < 3; c++)
-						if (Malom.t.getTable()[r][c] == 0)
-							for (StoneType st : MainScreen.stones)
-								if (st.getRow() == r && st.getCol() == c)
-									if (st.getState() == "p")
-										st.setVisible(true);
-			}
-		}
-	}
+	/*
+	 * public static void showAvailableSpots() { if (Malom.roundCounter % 2 ==
+	 * 1) { if ((Malom.playerOne.getOnBoardStones() != Malom.playerOne
+	 * .getStones()) || Malom.playerOne.canJump()) { for (int r = 0; r < 8; r++)
+	 * for (int c = 0; c < 3; c++) if (Malom.t.getTable()[r][c] == 0) for
+	 * (StoneType st : MainScreen.stones) if (st.getRow() == r && st.getCol() ==
+	 * c) if (st.getState() == "p") st.setVisible(true); /* } else {
+	 * 
+	 * }
+	 */
+	/*
+	 * } } else { if ((Malom.playerTwo.getOnBoardStones() != Malom.playerTwo
+	 * .getStones()) || Malom.playerTwo.canJump()) { for (int r = 0; r < 8; r++)
+	 * for (int c = 0; c < 3; c++) if (Malom.t.getTable()[r][c] == 0) for
+	 * (StoneType st : MainScreen.stones) if (st.getRow() == r && st.getCol() ==
+	 * c) if (st.getState() == "p") st.setVisible(true); } } }
+	 */
 
 	/***
 	 * Megadja hogy az adott pozíción történő kattintással követ választottak-e
@@ -319,29 +301,256 @@ public class Algoritmusok {
 		return false;
 	}
 
+	public static boolean jumpStone(MouseEvent me) {
+		if (MainScreen.haveSelected) {
+			for (StoneType st : MainScreen.stones) {
+				if (MainScreen.malom.roundCounter % 2 == 1) {
+					if (st.getState().equals("n"))
+						if (st.getColor().equals("r"))
+							if (isClicked(st, me)) {
+								MalomOperator mo = new MalomOperator(
+										MainScreen.selected.getCol(),
+										MainScreen.selected.getRow(),
+										st.getCol(), st.getRow(),
+										MainScreen.malom.t);
+								if (mo.operatorJump(MainScreen.malom.roundCounter)) {
+									st.setVisible(true);
+									MainScreen.selected.setVisible(false);
+									return true;
+								} else {
+									JOptionPane.showMessageDialog(null,
+											"Nem léphetsz oda");
+									return false;
+								}
+							}
+				} else {
+					if (st.getState().equals("n"))
+						if (st.getColor().equals("b"))
+							if (isClicked(st, me)) {
+								MalomOperator mo = new MalomOperator(
+										MainScreen.selected.getCol(),
+										MainScreen.selected.getRow(),
+										st.getCol(), st.getRow(),
+										MainScreen.malom.t);
+								if (mo.operatorJump(MainScreen.malom.roundCounter)) {
+									st.setVisible(true);
+									MainScreen.selected.setVisible(false);
+									return true;
+								} else {
+									JOptionPane.showMessageDialog(null,
+											"Nem léphetsz oda");
+									return false;
+								}
+							}
+				}
+			}
+		} else {
+			for (StoneType st : MainScreen.stones) {
+				if (MainScreen.malom.roundCounter % 2 == 1) {
+					if (st.getState().equals("s"))
+						if (st.getColor().equals("r"))
+							if (isClicked(st, me)) {
+								MainScreen.haveSelected = true;
+								MainScreen.selected = st;
+								MainScreen.selected.setVisible(true);
+								for (StoneType sta : MainScreen.stones) {
+									if (MainScreen.malom.roundCounter % 2 == 1) {
+										if (sta.getRow() == st.getRow()
+												&& sta.getCol() == st.getCol()) {
+											sta.setVisible(false);
+										}
+									}
+								}
+								return false;
+							}
+				} else {
+					if (st.getState().equals("s"))
+						if (st.getColor().equals("b"))
+							if (isClicked(st, me)) {
+								MainScreen.haveSelected = true;
+								MainScreen.selected = st;
+								MainScreen.selected.setVisible(true);
+								for (StoneType sta : MainScreen.stones) {
+									if (MainScreen.malom.roundCounter % 2 == 1) {
+										if (sta.getRow() == st.getRow()
+												&& sta.getCol() == st.getCol()) {
+											sta.setVisible(false);
+										}
+									}
+								}
+								return false;
+							}
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean moveStone(MouseEvent me) {
+		if (MainScreen.haveSelected) {
+			for (StoneType st : MainScreen.stones) {
+				if (MainScreen.malom.roundCounter % 2 == 1) {
+					if (st.getState().equals("n"))
+						if (st.getColor().equals("r"))
+							if (isClicked(st, me)) {
+								MalomOperator mo = new MalomOperator(
+										MainScreen.selected.getCol(),
+										MainScreen.selected.getRow(),
+										st.getCol(), st.getRow(),
+										MainScreen.malom.t);
+								if (mo.operatorMove(MainScreen.malom.roundCounter)) {
+									st.setVisible(true);
+									for (StoneType sta : MainScreen.stones) {
+										if (sta.equals(MainScreen.selected)) {
+											sta.setVisible(false);
+										}
+									}
+									return true;
+								} else {
+									JOptionPane.showMessageDialog(null,
+											"Nem léphetsz oda");
+									return false;
+								}
+							}
+				} else {
+					if (st.getState().equals("n"))
+						if (st.getColor().equals("b"))
+							if (isClicked(st, me)) {
+								MalomOperator mo = new MalomOperator(
+										MainScreen.selected.getCol(),
+										MainScreen.selected.getRow(),
+										st.getCol(), st.getRow(),
+										MainScreen.malom.t);
+								if (mo.operatorMove(MainScreen.malom.roundCounter)) {
+									st.setVisible(true);
+									for (StoneType sta : MainScreen.stones) {
+										if (sta.equals(MainScreen.selected)) {
+											sta.setVisible(false);
+										}
+									}
+									return true;
+								} else {
+									JOptionPane.showMessageDialog(null,
+											"Nem léphetsz oda");
+									return false;
+								}
+							}
+				}
+			}
+		} else {
+			for (StoneType st : MainScreen.stones) {
+				if (MainScreen.malom.roundCounter % 2 == 1) {
+					if (st.getState().equals("s"))
+						if (st.getColor().equals("r"))
+							if (isClicked(st, me)) {
+								MainScreen.haveSelected = true;
+								MainScreen.selected = st;
+								st.setVisible(true);
+								for (StoneType sta : MainScreen.stones) {
+									if (sta.getState().equals("n")) {
+										if (sta.getColor().equals("r")) {
+											if (isClicked(sta, me)) {
+												sta.setVisible(false);
+											}
+										}
+									}
+								}
+								return false;
+							}
+				} else {
+					if (st.getState().equals("s"))
+						if (st.getColor().equals("b"))
+							if (isClicked(st, me)) {
+								MainScreen.haveSelected = true;
+								MainScreen.selected = st;
+								st.setVisible(true);
+								for (StoneType sta : MainScreen.stones) {
+									if (sta.getState().equals("n")) {
+										if (sta.getColor().equals("b")) {
+											if (isClicked(sta, me)) {
+												sta.setVisible(false);
+											}
+										}
+									}
+								}
+								return false;
+							}
+				}
+			}
+		}
+		return false;
+	}
+
 	public static void putStone(MouseEvent me) {
-		
 		for (StoneType st : MainScreen.stones) {
 			if (MainScreen.malom.roundCounter % 2 == 1) {
 				if (st.getState().equals("n"))
 					if (st.getColor().equals("r"))
 						if (isClicked(st, me)) {
-							MalomOperator mo = new MalomOperator(st.getCol(), st.getRow(),
-									MainScreen.malom.t);
-							if (mo.canPut(
-									MainScreen.malom.roundCounter,
+							MalomOperator mo = new MalomOperator(st.getCol(),
+									st.getRow(), MainScreen.malom.t);
+							st.setVisible(true);
+							mo.operatorPut(MainScreen.malom.roundCounter,
 									MainScreen.malom.playerOne,
-									MainScreen.malom.playerTwo)) {
-								st.setVisible(true);
-								mo.operatorPut(
-										MainScreen.malom.roundCounter,
-										MainScreen.malom.playerOne,
-										MainScreen.malom.playerTwo);
-							}
+									MainScreen.malom.playerTwo);
+						}
 
+			} else {
+				if (st.getState().equals("n"))
+					if (st.getColor().equals("b"))
+						if (isClicked(st, me)) {
+							MalomOperator mo = new MalomOperator(st.getCol(),
+									st.getRow(), MainScreen.malom.t);
+							st.setVisible(true);
+							mo.operatorPut(MainScreen.malom.roundCounter,
+									MainScreen.malom.playerOne,
+									MainScreen.malom.playerTwo);
 						}
 			}
 		}
+	}
+
+	public static boolean removeStone(MouseEvent me) {
+		for (StoneType st : MainScreen.stones) {
+			if (MainScreen.malom.roundCounter % 2 == 1) {
+				if (st.getState().equals("n"))
+					if (st.getColor().equals("b"))
+						if (isClicked(st, me)) {
+							MalomOperator mo = new MalomOperator(
+									MainScreen.malom.t);
+							if (!mo.operatorRemove(st.getRow(), st.getCol(),
+									MainScreen.malom.roundCounter,
+									MainScreen.malom.playerOne,
+									MainScreen.malom.playerTwo)) {
+								JOptionPane.showMessageDialog(null,
+										"Nem veheted le azt a követ.");
+								return false;
+							} else {
+								st.setVisible(false);
+								return true;
+							}
+						}
+			} else {
+				if (st.getState().equals("n"))
+					if (st.getColor().equals("r"))
+						if (isClicked(st, me)) {
+							MalomOperator mo = new MalomOperator(
+									MainScreen.malom.t);
+							if (!mo.operatorRemove(st.getRow(), st.getCol(),
+									MainScreen.malom.roundCounter,
+									MainScreen.malom.playerOne,
+									MainScreen.malom.playerTwo)) {
+								JOptionPane.showMessageDialog(null,
+										"Nem veheted le azt a követ.");
+								return false;
+							} else {
+								st.setVisible(false);
+								return true;
+							}
+						}
+			}
+		}
+		return false;
 	}
 
 	/***

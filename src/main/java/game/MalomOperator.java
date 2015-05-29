@@ -47,13 +47,13 @@ public class MalomOperator {
 	/**
 	 * A kő asztalra tételéhez elegendő adatot szolgáltató konstruktor.
 	 * 
-	 * @param x a cél sor szám
-	 * @param y a cál oszlop szám
+	 * @param x a cél oszlop szám
+	 * @param y a cál sor szám
 	 * @param t az állapotteret tartalmazó objektum
 	 */
 	public MalomOperator(int x, int y, TableType t) {
-		this.toX = x;
-		this.toY = y;
+		this.toX = y;
+		this.toY = x;
 		this.table = t;
 	}
 	
@@ -68,10 +68,10 @@ public class MalomOperator {
 	 * @param t  az állapotteret tartalmazó objektum
 	 */
 	public MalomOperator(int fx, int fy, int tx, int ty, TableType t) {
-		this.fromX = fx;
-		this.fromY = fy;
-		this.toX = tx;
-		this.toY = ty;
+		this.fromX = fy;
+		this.fromY = fx;
+		this.toX = ty;
+		this.toY = tx;
 		this.table = t;
 	}
 
@@ -126,10 +126,10 @@ public class MalomOperator {
 	 *            a táblázat amelyben az adatok vannak
 	 * @return malomban van-e
 	 */
-	private boolean isStoneInMalom(int row, int col, TableType t) {
+	public boolean isStoneInMalom(int row, int col, TableType t) {
 
 		for (int i = 0; i < 8; i++) {
-			if (row == 1 && (col == 0 || col == 1 || col == 2))
+			if (row == i && (col == 0 || col == 1 || col == 2))
 				if (isMalom(i, 0, i, 1, i, 2, t.getTable())) {
 					return true;
 				}
@@ -207,7 +207,7 @@ public class MalomOperator {
 	 */
 	public void operatorPut(Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
 		if (isValidStep(toX, toY, table, roundCounter)) {
-			table.setTable(toX, toY, roundCounter % 2 + 1);
+			table.setTable(toX, toY, (roundCounter-1) % 2 + 1);
 			if (roundCounter % 2 == 1) { 
 				playerOne.setOnBoardStones(playerOne.getOnBoardStones() + 1);
 			}
@@ -222,16 +222,18 @@ public class MalomOperator {
 	 * 
 	 * @param roundCounter az aktuális játékos meghatározásához kell
 	 */
-	public void operatorMove(Integer roundCounter) {
+	public boolean operatorMove(Integer roundCounter) {
 		if (isValidStep(toX, toY, table, roundCounter)) {
 			if (fromX == 0 && fromY == 0) {
 				if (toX == 0 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 3 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
@@ -239,25 +241,30 @@ public class MalomOperator {
 				if (toX == 0 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 1 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 0 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
-			if (fromX == 0 && fromY == 1) {
+			if (fromX == 0 && fromY == 2) {
 				if (toX == 0 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
@@ -265,10 +272,12 @@ public class MalomOperator {
 				if (toX == 1 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
-				if (toX == 3 && toY == 0) {
+				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
@@ -276,18 +285,22 @@ public class MalomOperator {
 				if (toX == 0 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 1 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 1 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 2 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
@@ -295,10 +308,12 @@ public class MalomOperator {
 				if (toX == 1 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
@@ -306,10 +321,12 @@ public class MalomOperator {
 				if (toX == 2 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 3 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
@@ -317,14 +334,17 @@ public class MalomOperator {
 				if (toX == 1 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 2 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 2 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 
@@ -332,10 +352,12 @@ public class MalomOperator {
 				if (toX == 2 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -343,14 +365,17 @@ public class MalomOperator {
 				if (toX == 0 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 7 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -358,18 +383,22 @@ public class MalomOperator {
 				if (toX == 3 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 1 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 3 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 6 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -377,14 +406,17 @@ public class MalomOperator {
 				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 2 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 5 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -392,14 +424,17 @@ public class MalomOperator {
 				if (toX == 2 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 5 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -407,18 +442,22 @@ public class MalomOperator {
 				if (toX == 4 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 1 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 6 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -426,14 +465,17 @@ public class MalomOperator {
 				if (toX == 4 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 0 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 7 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -441,10 +483,12 @@ public class MalomOperator {
 				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 5 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -452,14 +496,17 @@ public class MalomOperator {
 				if (toX == 5 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 6 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 5 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -467,10 +514,12 @@ public class MalomOperator {
 				if (toX == 5 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -478,10 +527,12 @@ public class MalomOperator {
 				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 6 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -489,18 +540,22 @@ public class MalomOperator {
 				if (toX == 6 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 5 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 7 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 6 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -508,10 +563,12 @@ public class MalomOperator {
 				if (toX == 6 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -519,10 +576,12 @@ public class MalomOperator {
 				if (toX == 3 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 7 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -530,14 +589,17 @@ public class MalomOperator {
 				if (toX == 7 && toY == 0) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 6 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 7 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 			
@@ -545,27 +607,24 @@ public class MalomOperator {
 				if (toX == 7 && toY == 1) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 				if (toX == 4 && toY == 2) {
 					table.setTable(toX, toY, roundCounter % 2 + 1);
 					table.setTable(fromX, fromY, 0);
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 
-	/**
-	 * A tábláról egy kő elvételét teszi lehetővé.
-	 * 
-	 * @param X a kiszemelt kő sorszáma
-	 * @param Y a kiszemelt kő oszlopszáma
-	 * @param roundCounter az játékos meghatározásához szükséges
-	 */
-	public void operatorRemove(int X, int Y, Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
+	public boolean allInMalom(Integer roundCounter) {
 		boolean allInMalom = true;
-		for (int r =0; r < 7; r++) {
+		
+		for (int r = 0; r < 7; r++) {
 			for (int c = 0; c < 3; c++) {
-				if (table.getTable()[r][c] != roundCounter % 2 +1)
+				if (table.getTable()[r][c] == roundCounter % 2 +1)
 					if (!isStoneInMalom(r, c, table)) {
 						allInMalom = false;
 						break;
@@ -579,15 +638,30 @@ public class MalomOperator {
 				continue;
 		}
 		
-		if (allInMalom) {
+		return allInMalom;
+	}
+	
+	/**
+	 * A tábláról egy kő elvételét teszi lehetővé.
+	 * 
+	 * @param X a kiszemelt kő sorszáma
+	 * @param Y a kiszemelt kő oszlopszáma
+	 * @param roundCounter az játékos meghatározásához szükséges
+	 * @param playerOne az első játékost reprezentáló objektum
+	 * @param playerTwo a második játékost reprezentáló objektum
+	 */
+	public boolean operatorRemove(int X, int Y, Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
+		if (allInMalom(roundCounter)) {
 			table.setTable(X, Y, 0);
 			if (roundCounter % 2 + 1 == 1) { 
 				playerOne.setStones(playerOne.getStones() - 1);
 				playerOne.setOnBoardStones(playerOne.getOnBoardStones() - 1);
+				return true;
 			}
 			else {
 				playerTwo.setStones(playerTwo.getStones() - 1);
 				playerTwo.setOnBoardStones(playerTwo.getOnBoardStones() - 1);
+				return true;
 			}
 		} else {
 			if (!isStoneInMalom(X, Y, table)) {
@@ -595,13 +669,17 @@ public class MalomOperator {
 				if (roundCounter % 2 + 1 == 1) { 
 					playerOne.setStones(playerOne.getStones() - 1);
 					playerOne.setOnBoardStones(playerOne.getOnBoardStones() - 1);
+					return true;
 				}
 				else {
 					playerTwo.setStones(playerTwo.getStones() - 1);
 					playerTwo.setOnBoardStones(playerTwo.getOnBoardStones() - 1);
+					return true;
 				}
 			}
 		}
+		
+		return false;
 	}
 
 	/**
@@ -609,11 +687,13 @@ public class MalomOperator {
 	 * 
 	 * @param roundCounter
 	 */
-	public void operatorJump(Integer roundCounter) {
+	public boolean operatorJump(Integer roundCounter) {
 		if (isValidStep(toX,toY, table, roundCounter)) {
 			table.setTable(toX, toY, roundCounter % 2 + 1);
 			table.setTable(fromX, fromY, 0);
+			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -704,13 +784,16 @@ public class MalomOperator {
 		for (int m = 0; m < malmok.size(); m++) {
 			boolean has = false;
 			for (Integer[] intarray : previousMalmok) {
-				for (int i = 0; i < 6; i++) {
+				int i = 0;
+				for (i = 0; i < 6; i++) {
 					if (malmok.get(m)[i] == intarray[i])
 						continue;
-					else
+					else {
 						break;
+					}
 				}
-				has = true;
+				if (i == 6)
+					has = true;
 			}
 			hasPair[m] = has;
 		}
@@ -724,7 +807,7 @@ public class MalomOperator {
 	}
 
 	/***
-	 * Eldönti az adott helyzetben hogy a sorrakerült játékos lehelezhet-e követ
+	 * Eldönti az adott helyzetben hogy a sorrakerült játékos lehelyezhet-e követ
 	 * a táblára.
 	 * 
 	 * @param roundCounter
@@ -788,8 +871,8 @@ public class MalomOperator {
 	 * @param playerTwo
 	 * @return
 	 */
-	public boolean canRemove(Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
-		if (hasNewMalom(Malom.malmok, Malom.previousMalmok)) {
+	public boolean canRemove(Integer roundCounter, PlayerType playerOne, PlayerType playerTwo, Malom malom) {
+		if (hasNewMalom(malom.malmok, malom.previousMalmok)) {
 			return true;
 		} else 
 			return false;

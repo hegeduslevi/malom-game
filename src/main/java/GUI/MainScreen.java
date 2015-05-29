@@ -22,8 +22,10 @@ package GUI;
  * #L%
  */
 
-
 import game.Malom;
+import game.MalomOperator;
+
+import GUI.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -42,11 +44,13 @@ import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import service.*;
 
 /***
- * A főképernyő grafikus felületi elemeit, az eseménykezelőket, és az azokhoz tartozó {@code private} metódusokat tartalmazó osztály.
+ * A főképernyő grafikus felületi elemeit, az eseménykezelőket, és az azokhoz
+ * tartozó {@code private} metódusokat tartalmazó osztály.
  */
 public class MainScreen {
 	/**
@@ -62,19 +66,24 @@ public class MainScreen {
 	 * A {@code JFrame} objektum amin a grafikus felület elemei találhatóak.
 	 */
 	private JFrame frmMalom;
-	
+
 	/***
-	 * A felületen található köveket tartalmazó {@code StoneType} típusú elemeket tartalmazó lista.
+	 * A felületen található köveket tartalmazó {@code StoneType} típusú
+	 * elemeket tartalmazó lista.
 	 */
 	public static final List<StoneType> stones = Algoritmusok.getStones();
 
 	public static MouseEvent oldMe;
 	public static MouseEvent Me;
-	
+	public static boolean hasPlayerTakenTheStep = false;
+	public static boolean haveSelected = false;
+	public static StoneType selected;
+
 	/**
 	 * Elindítja az alkalmazást.
 	 * 
-	 * @param args az intáshoz felhasználható paraméterek
+	 * @param args
+	 *            az intáshoz felhasználható paraméterek
 	 */
 	public static void start(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -94,18 +103,18 @@ public class MainScreen {
 	 */
 	public MainScreen() {
 		malom = new Malom();
-		
+
 		initialize();
 	}
 
-	
 	/***
 	 * Elkészíti a keret tartalmát a megjelenítésre.
 	 */
 	private void initialize() {
 		frmMalom = new JFrame();
 		frmMalom.setResizable(false);
-		frmMalom.setTitle("Malom " + Malom.playerOne.getName() + " - " + Malom.playerTwo.getName());
+		frmMalom.setTitle("Malom " + malom.playerOne.getName() + " - "
+				+ malom.playerTwo.getName());
 		frmMalom.setBounds(100, 100, 550, 340);
 		frmMalom.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -115,24 +124,57 @@ public class MainScreen {
 
 		frmMalom.getContentPane().add(imgPanel);
 
-		JLabel lblJtkos = new JLabel("1. játékos: " + Malom.playerOne.getName());
+		final JLabel lblJtkos = new JLabel("1. játékos: "
+				+ malom.playerOne.getName());
 		lblJtkos.setForeground(Color.RED);
 		lblJtkos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblJtkos.setBounds(305, 11, 179, 21);
 		imgPanel.add(lblJtkos);
 
-		JLabel lblJtkos_1 = new JLabel("2. játékos: " + Malom.playerTwo.getName());
+		final JLabel lblJtkos_step = new JLabel("1. játékos: "
+				+ malom.playerOne.getName() + " - lép!");
+		lblJtkos_step.setForeground(Color.RED);
+		lblJtkos_step.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblJtkos_step.setBounds(305, 11, 179, 21);
+		lblJtkos_step.setVisible(false);
+		imgPanel.add(lblJtkos_step);
+
+		final JLabel lblJtkos_1 = new JLabel("2. játékos: "
+				+ malom.playerTwo.getName());
 		lblJtkos_1.setForeground(Color.BLUE);
 		lblJtkos_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblJtkos_1.setBounds(305, 117, 179, 14);
 		imgPanel.add(lblJtkos_1);
+
+		final JLabel lblJtkos_step_1 = new JLabel("2. játékos: "
+				+ malom.playerTwo.getName() + " - lép!");
+		lblJtkos_step_1.setForeground(Color.BLUE);
+		lblJtkos_step_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblJtkos_step_1.setBounds(305, 117, 179, 14);
+		lblJtkos_step_1.setVisible(false);
+		imgPanel.add(lblJtkos_step_1);
 
 		JButton btnNextButton = new JButton("Következő");
 		btnNextButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				logger.info("next round");
-				Malom.roundCounter++;
+				malom.roundCounter++;
+				hasPlayerTakenTheStep = false;
+				haveSelected = false;
+				if (malom.roundCounter % 2 == 1) {
+					lblJtkos.setVisible(false);
+					lblJtkos_step.setVisible(true);
+					lblJtkos_1.setVisible(true);
+					lblJtkos_step_1.setVisible(false);
+					frmMalom.repaint();
+				} else {
+					lblJtkos.setVisible(true);
+					lblJtkos_step.setVisible(false);
+					lblJtkos_1.setVisible(false);
+					lblJtkos_step_1.setVisible(true);
+					frmMalom.repaint();
+				}
 			}
 		});
 		btnNextButton.setBounds(305, 217, 129, 23);
@@ -149,23 +191,27 @@ public class MainScreen {
 		});
 		btnNewButton_1.setBounds(305, 243, 129, 23);
 		imgPanel.add(btnNewButton_1);
-		
-		final JLabel lblKvekSzma_1 = new JLabel("Kövek száma: " + Malom.playerOne.getStones());
+
+		final JLabel lblKvekSzma_1 = new JLabel("Kövek száma: "
+				+ Malom.playerOne.getStones());
 		lblKvekSzma_1.setBounds(305, 32, 112, 14);
 		imgPanel.add(lblKvekSzma_1);
-		
-		final JLabel lblKvekATablan_1 = new JLabel("Kövek a táblán: " + Malom.playerOne.getOnBoardStones());
+
+		final JLabel lblKvekATablan_1 = new JLabel("Kövek a táblán: "
+				+ Malom.playerOne.getOnBoardStones());
 		lblKvekATablan_1.setBounds(305, 57, 112, 14);
 		imgPanel.add(lblKvekATablan_1);
-		
-		final JLabel lblKvekSzma_2 = new JLabel("Kövek száma: " + Malom.playerTwo.getStones());
+
+		final JLabel lblKvekSzma_2 = new JLabel("Kövek száma: "
+				+ Malom.playerTwo.getStones());
 		lblKvekSzma_2.setBounds(305, 142, 101, 14);
 		imgPanel.add(lblKvekSzma_2);
-		
-		final JLabel lblKvekATablan_2 = new JLabel("Kövek a táblán: " + Malom.playerTwo.getOnBoardStones());
+
+		final JLabel lblKvekATablan_2 = new JLabel("Kövek a táblán: "
+				+ Malom.playerTwo.getOnBoardStones());
 		lblKvekATablan_2.setBounds(305, 167, 112, 14);
 		imgPanel.add(lblKvekATablan_2);
-		
+
 		JLabel lblMostUgorhatsz_1 = new JLabel("Most ugorhatsz!");
 		lblMostUgorhatsz_1.setBounds(305, 82, 112, 14);
 		if (Malom.playerOne.canJump())
@@ -173,7 +219,7 @@ public class MainScreen {
 		else
 			lblMostUgorhatsz_1.setVisible(false);
 		imgPanel.add(lblMostUgorhatsz_1);
-		
+
 		JLabel lblMostUgorhatsz_2 = new JLabel("Most ugorhatsz!");
 		lblMostUgorhatsz_2.setBounds(305, 192, 101, 14);
 		if (Malom.playerTwo.canJump())
@@ -181,7 +227,7 @@ public class MainScreen {
 		else
 			lblMostUgorhatsz_2.setVisible(false);
 		imgPanel.add(lblMostUgorhatsz_2);
-		
+
 		JButton btnNewButton = new JButton("Adatb-t inicializal");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -196,12 +242,13 @@ public class MainScreen {
 		});
 		btnNewButton.setBounds(305, 277, 129, 23);
 		imgPanel.add(btnNewButton);
-		
+
 		JButton btnFelad = new JButton("Felad");
 		btnFelad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				logger.info(Malom.roundCounter % 2 == 1 ? "playerOne given up" : "playerTwo given up");
+				logger.info(Malom.roundCounter % 2 == 1 ? "playerOne given up"
+						: "playerTwo given up");
 				Algoritmusok.felad();
 				frmMalom.dispose();
 			}
@@ -209,39 +256,193 @@ public class MainScreen {
 		btnFelad.setBounds(444, 217, 89, 23);
 		imgPanel.add(btnFelad);
 
+		final JLabel lblLevehetszKovet_1 = new JLabel("Levehetsz egy követ.");
+		lblLevehetszKovet_1.setBounds(409, 32, 124, 14);
+		lblLevehetszKovet_1.setVisible(false);
+		imgPanel.add(lblLevehetszKovet_1);
+
+		final JLabel lblLevehetszKovet_2 = new JLabel("Levehetsz egy követ.");
+		lblLevehetszKovet_2.setBounds(409, 142, 124, 14);
+		lblLevehetszKovet_2.setVisible(false);
+		imgPanel.add(lblLevehetszKovet_2);
+
 		for (StoneType s : stones) {
 			imgPanel.add(s.getLabel());
 		}
-		
-		Algoritmusok.updateTable();
-		Algoritmusok.showAvailableSpots();
-		
+
+		// Algoritmusok.updateTable();
+
 		frmMalom.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (arg0.getButton() == MouseEvent.BUTTON1) {
-					for (StoneType st : stones) {
-						if (st.getVisible())
-							if (Algoritmusok.isClicked(st, arg0)) {
-								Algoritmusok.updateTable();
-								frmMalom.repaint();
+					if (!hasPlayerTakenTheStep) {
+						if (new MalomOperator(malom.t).canRemove(
+								malom.roundCounter, malom.playerOne,
+								malom.playerTwo, malom)) {
+							hasPlayerTakenTheStep = Algoritmusok
+									.removeStone(arg0);
+
+							logger.info("remove");
+
+							{
+								malom.previousMalmok = malom.malmok;
+								malom.malmok = new MalomOperator(malom.t)
+										.getMalmok();
+								logger.info("malom positions updated");
 							}
+
+							lblKvekSzma_1.setText("Kövek száma: "
+									+ malom.playerOne.getStones());
+							lblKvekATablan_1.setText("Kövek a táblán: "
+									+ malom.playerOne.getOnBoardStones());
+							lblKvekSzma_2.setText("Kövek száma: "
+									+ malom.playerTwo.getStones());
+							lblKvekATablan_2.setText("Kövek a táblán: "
+									+ malom.playerTwo.getOnBoardStones());
+
+							if (malom.roundCounter % 2 == 1)
+								lblLevehetszKovet_1.setVisible(false);
+							else
+								lblLevehetszKovet_2.setVisible(false);
+
+							frmMalom.repaint();
+						} else {
+							if (new MalomOperator(malom.t).canJump(
+									malom.roundCounter, malom.playerOne,
+									malom.playerTwo)) {
+								logger.info("jump " + haveSelected);
+								hasPlayerTakenTheStep = Algoritmusok
+										.jumpStone(arg0);
+								frmMalom.repaint();
+
+								
+
+								if (hasPlayerTakenTheStep) {
+									{
+										malom.previousMalmok = malom.malmok;
+										malom.malmok = new MalomOperator(malom.t)
+												.getMalmok();
+										logger.info("malom positions updated");
+									}
+									
+									if (new MalomOperator(malom.t).canRemove(
+											malom.roundCounter,
+											malom.playerOne, malom.playerTwo,
+											malom)) {
+										if (malom.roundCounter % 2 == 1)
+											lblLevehetszKovet_1
+													.setVisible(true);
+										else
+											lblLevehetszKovet_2
+													.setVisible(true);
+										frmMalom.repaint();
+
+										hasPlayerTakenTheStep = false;
+									}
+								}
+							}
+
+							if (new MalomOperator(malom.t).canMove(
+									malom.roundCounter, malom.playerOne,
+									malom.playerTwo)) {
+								logger.info("move " + haveSelected);
+								hasPlayerTakenTheStep = Algoritmusok
+										.moveStone(arg0);
+								frmMalom.repaint();
+
+								
+
+								if (hasPlayerTakenTheStep) {
+									{
+										malom.previousMalmok = malom.malmok;
+										malom.malmok = new MalomOperator(malom.t)
+												.getMalmok();
+										logger.info("malom positions updated");
+									}
+
+									
+									if (new MalomOperator(malom.t).canRemove(
+											malom.roundCounter,
+											malom.playerOne, malom.playerTwo,
+											malom)) {
+
+										if (malom.roundCounter % 2 == 1)
+											lblLevehetszKovet_1
+													.setVisible(true);
+										else
+											lblLevehetszKovet_2
+													.setVisible(true);
+										frmMalom.repaint();
+
+										hasPlayerTakenTheStep = false;
+									}
+								}
+							} else {
+								JOptionPane
+										.showMessageDialog(frmMalom,
+												"Még nem raktál le minden követ - Jobb gomb");
+							}
+						}
+					} else {
+						JOptionPane.showMessageDialog(frmMalom,
+								"Már léptél, nyomd meg a 'következő' gombot!");
 					}
+
 				}
 
 				if (arg0.getButton() == MouseEvent.BUTTON3) {
-					Algoritmusok.putStone(arg0);
-					
-					
+					if (!hasPlayerTakenTheStep) {
+						if (new MalomOperator(malom.t).canPut(
+								malom.roundCounter, malom.playerOne,
+								malom.playerTwo)) {
+							Algoritmusok.putStone(arg0);
+							
+							{
+								malom.previousMalmok = malom.malmok;
+								malom.malmok = new MalomOperator(malom.t)
+										.getMalmok();
+								logger.info("malom positions updated");
+							}
+							
+							hasPlayerTakenTheStep = true;
+							
+							if (new MalomOperator(malom.t).canRemove(
+									malom.roundCounter, malom.playerOne,
+									malom.playerTwo, malom)) {
+								if (malom.roundCounter % 2 == 1)
+									lblLevehetszKovet_1.setVisible(true);
+								else
+									lblLevehetszKovet_2.setVisible(true);
+								frmMalom.repaint();
+
+								hasPlayerTakenTheStep = false;
+							}
+						} else {
+							JOptionPane.showMessageDialog(frmMalom,
+									"Már minden követ lehejeztél");
+						}
+					} else {
+						logger.info("" + malom.roundCounter + " "
+								+ hasPlayerTakenTheStep);
+						JOptionPane.showMessageDialog(frmMalom,
+								"Már léptél, nyomd meg a 'következő' gombot!");
+					}
+
+					lblKvekSzma_1.setText("Kövek száma: "
+							+ malom.playerOne.getStones());
+					lblKvekATablan_1.setText("Kövek a táblán: "
+							+ malom.playerOne.getOnBoardStones());
+					lblKvekSzma_2.setText("Kövek száma: "
+							+ malom.playerTwo.getStones());
+					lblKvekATablan_2.setText("Kövek a táblán: "
+							+ malom.playerTwo.getOnBoardStones());
 					frmMalom.repaint();
-					lblKvekSzma_1.setText("Kövek száma: " + Malom.playerOne.getStones());
-					lblKvekATablan_1.setText("Kövek a táblán: " + Malom.playerOne.getOnBoardStones());
-					lblKvekSzma_2.setText("Kövek száma: " + Malom.playerTwo.getStones());
-					lblKvekATablan_2.setText("Kövek a táblán: " + Malom.playerTwo.getOnBoardStones());
 				}
 			}
 		});
 
 		frmMalom.setVisible(true);
 	}
+
 }

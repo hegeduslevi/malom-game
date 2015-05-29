@@ -89,20 +89,5 @@ public class AlgoritmusokTest {
 		assertEquals(true, Algoritmusok.isClicked(st, me));
 	}
 	
-	/***
-	 * A tábla alapján a grafikus felületet frissító metódus tesztje.
-	 */
-	@Test
-	public void testUpdateTable() {
-		Algoritmusok.updateTable();
-		boolean hasVisible = false;
-		
-		for (StoneType st : MainScreen.stones) {
-			if (st.getVisible() == true) 
-				hasVisible = true;
-		}
-			
-		assertEquals(false, hasVisible);
-		
-	}
+	
 }
