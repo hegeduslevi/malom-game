@@ -7,7 +7,7 @@ A program JDBC kapcsolaton keresztül csatlakozik egy SQL adatbázishoz ahol nyi
 
 A kezelőfelület használata:
 
-	- Bal egérgombbal lehet mozgatni a köveket (nincs implementálva)
+	- Bal egérgombbal lehet mozgatni a köveket
 	- Jobb egérgombbal lehet lehelyezni követ a táblára 
 	- A kör befejezését a következő gomb lenyomásával lehet kezdeményezni.
 	- Felad gomb megnyomásakor az aktuális játékos vesztesként az ellenfél győztesként lesz elszámolva
