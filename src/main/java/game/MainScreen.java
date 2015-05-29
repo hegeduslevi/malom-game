@@ -217,7 +217,7 @@ public class MainScreen {
 		lblKvekATablan_2.setBounds(305, 167, 112, 14);
 		imgPanel.add(lblKvekATablan_2);
 
-		JLabel lblMostUgorhatsz_1 = new JLabel("Most ugorhatsz!");
+		final JLabel lblMostUgorhatsz_1 = new JLabel("Most ugorhatsz!");
 		lblMostUgorhatsz_1.setBounds(305, 82, 112, 14);
 		if (Malom.playerOne.canJump())
 			lblMostUgorhatsz_1.setVisible(true);
@@ -225,7 +225,7 @@ public class MainScreen {
 			lblMostUgorhatsz_1.setVisible(false);
 		imgPanel.add(lblMostUgorhatsz_1);
 
-		JLabel lblMostUgorhatsz_2 = new JLabel("Most ugorhatsz!");
+		final JLabel lblMostUgorhatsz_2 = new JLabel("Most ugorhatsz!");
 		lblMostUgorhatsz_2.setBounds(305, 192, 101, 14);
 		if (Malom.playerTwo.canJump())
 			lblMostUgorhatsz_2.setVisible(true);
