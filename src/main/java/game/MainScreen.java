@@ -88,7 +88,7 @@ public class MainScreen {
 	 * @param args
 	 *            az intáshoz felhasználható paraméterek
 	 */
-	public static void start(String[] args) {
+	public static void start(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
