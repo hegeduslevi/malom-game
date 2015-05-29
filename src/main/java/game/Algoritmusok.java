@@ -242,37 +242,6 @@ public class Algoritmusok {
 	}
 
 	/***
-	 * A tábla állapota alapján frissíti a grafikus felületet.
-	 */
-	/*
-	 * public static void updateTable() { for (int r = 0; r < 8; r++) { for (int
-	 * c = 0; c < 3; c++) { if (Malom.t.getTable()[r][c] != 0) { for (StoneType
-	 * st : MainScreen.stones) { if (isWanted(st, r, c, Malom.t)) {
-	 * st.setVisible(true); } } } } } }
-	 */
-
-	/***
-	 * Megmutatja mely pozíciókra léphet, vagy tehet követ a játékos.
-	 */
-	/*
-	 * public static void showAvailableSpots() { if (Malom.roundCounter % 2 ==
-	 * 1) { if ((Malom.playerOne.getOnBoardStones() != Malom.playerOne
-	 * .getStones()) || Malom.playerOne.canJump()) { for (int r = 0; r < 8; r++)
-	 * for (int c = 0; c < 3; c++) if (Malom.t.getTable()[r][c] == 0) for
-	 * (StoneType st : MainScreen.stones) if (st.getRow() == r && st.getCol() ==
-	 * c) if (st.getState() == "p") st.setVisible(true); /* } else {
-	 * 
-	 * }
-	 */
-	/*
-	 * } } else { if ((Malom.playerTwo.getOnBoardStones() != Malom.playerTwo
-	 * .getStones()) || Malom.playerTwo.canJump()) { for (int r = 0; r < 8; r++)
-	 * for (int c = 0; c < 3; c++) if (Malom.t.getTable()[r][c] == 0) for
-	 * (StoneType st : MainScreen.stones) if (st.getRow() == r && st.getCol() ==
-	 * c) if (st.getState() == "p") st.setVisible(true); } } }
-	 */
-
-	/***
 	 * Megadja hogy az adott pozíción történő kattintással követ választottak-e
 	 * ki.
 	 * 
@@ -316,7 +285,11 @@ public class Algoritmusok {
 										MainScreen.malom.t);
 								if (mo.operatorJump(MainScreen.malom.roundCounter)) {
 									st.setVisible(true);
-									MainScreen.selected.setVisible(false);
+									for (StoneType sta : MainScreen.stones) {
+										if (sta.equals(MainScreen.selected)) {
+											sta.setVisible(false);
+										}
+									}
 									return true;
 								} else {
 									JOptionPane.showMessageDialog(null,
@@ -335,7 +308,11 @@ public class Algoritmusok {
 										MainScreen.malom.t);
 								if (mo.operatorJump(MainScreen.malom.roundCounter)) {
 									st.setVisible(true);
-									MainScreen.selected.setVisible(false);
+									for (StoneType sta : MainScreen.stones) {
+										if (sta.equals(MainScreen.selected)) {
+											sta.setVisible(false);
+										}
+									}
 									return true;
 								} else {
 									JOptionPane.showMessageDialog(null,
@@ -353,12 +330,13 @@ public class Algoritmusok {
 							if (isClicked(st, me)) {
 								MainScreen.haveSelected = true;
 								MainScreen.selected = st;
-								MainScreen.selected.setVisible(true);
+								st.setVisible(true);
 								for (StoneType sta : MainScreen.stones) {
-									if (MainScreen.malom.roundCounter % 2 == 1) {
-										if (sta.getRow() == st.getRow()
-												&& sta.getCol() == st.getCol()) {
-											sta.setVisible(false);
+									if (sta.getState().equals("n")) {
+										if (sta.getColor().equals("r")) {
+											if (isClicked(sta, me)) {
+												sta.setVisible(false);
+											}
 										}
 									}
 								}
@@ -370,12 +348,13 @@ public class Algoritmusok {
 							if (isClicked(st, me)) {
 								MainScreen.haveSelected = true;
 								MainScreen.selected = st;
-								MainScreen.selected.setVisible(true);
+								st.setVisible(true);
 								for (StoneType sta : MainScreen.stones) {
-									if (MainScreen.malom.roundCounter % 2 == 1) {
-										if (sta.getRow() == st.getRow()
-												&& sta.getCol() == st.getCol()) {
-											sta.setVisible(false);
+									if (sta.getState().equals("n")) {
+										if (sta.getColor().equals("b")) {
+											if (isClicked(sta, me)) {
+												sta.setVisible(false);
+											}
 										}
 									}
 								}

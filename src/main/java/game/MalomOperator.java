@@ -25,34 +25,34 @@ package game;
  * #L%
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *	A játékban való mozgást lehetővé tevő metódusok és azok segédmetódusainak gyűjteménye.
+ * A játékban való mozgást lehetővé tevő metódusok és azok segédmetódusainak
+ * gyűjteménye.
  */
 public class MalomOperator {
 	/**
 	 * Az X koordináta amelyről elmodzdulunk.
 	 */
 	int fromX;
-	
+
 	/**
 	 * Az Y koordináta amelyről elmozdulunk.
 	 */
 	int fromY;
-	
+
 	/**
 	 * Az X koordináta amelyre érkezünk.
 	 */
 	int toX;
-	
+
 	/**
 	 * Az Y koordináta amelyre érkezünk.
 	 */
 	int toY;
-	
+
 	/**
 	 * A játék állapottere, a tábla.
 	 */
@@ -61,34 +61,42 @@ public class MalomOperator {
 	/**
 	 * Letétel és elvétel esetén használható egyszerűsített konstruktor.
 	 * 
-	 * @param t az állapotteret tartalmazó objektum
+	 * @param t
+	 *            az állapotteret tartalmazó objektum
 	 */
 	public MalomOperator(TableType t) {
 		this.table = t;
 	}
-	
+
 	/**
 	 * A kő asztalra tételéhez elegendő adatot szolgáltató konstruktor.
 	 * 
-	 * @param x a cél oszlop szám
-	 * @param y a cál sor szám
-	 * @param t az állapotteret tartalmazó objektum
+	 * @param x
+	 *            a cél oszlop szám
+	 * @param y
+	 *            a cál sor szám
+	 * @param t
+	 *            az állapotteret tartalmazó objektum
 	 */
 	public MalomOperator(int x, int y, TableType t) {
 		this.toX = y;
 		this.toY = x;
 		this.table = t;
 	}
-	
 
 	/**
 	 * A telljes konstruktor.
 	 * 
-	 * @param fx az X koordináta amelyről elmozulunk
-	 * @param fy az Y koordináta amelyről elmozdulunk
-	 * @param tx az X koordináta amelyre érkezünk
-	 * @param ty az Y koordináta amelyre érkezünk
-	 * @param t  az állapotteret tartalmazó objektum
+	 * @param fx
+	 *            az X koordináta amelyről elmozulunk
+	 * @param fy
+	 *            az Y koordináta amelyről elmozdulunk
+	 * @param tx
+	 *            az X koordináta amelyre érkezünk
+	 * @param ty
+	 *            az Y koordináta amelyre érkezünk
+	 * @param t
+	 *            az állapotteret tartalmazó objektum
 	 */
 	public MalomOperator(int fx, int fy, int tx, int ty, TableType t) {
 		this.fromX = fy;
@@ -101,10 +109,14 @@ public class MalomOperator {
 	/**
 	 * Eldönti hogy az adott helyzetben a kitűzött helyre léphetünk-e.
 	 * 
-	 * @param toX a cél X koordináta
-	 * @param toY a cél Y koordináta
-	 * @param t az állapotteret reprezentáló objektum
-	 * @param roundCounter a játékos meghatározásához kellő számláló
+	 * @param toX
+	 *            a cél X koordináta
+	 * @param toY
+	 *            a cél Y koordináta
+	 * @param t
+	 *            az állapotteret reprezentáló objektum
+	 * @param roundCounter
+	 *            a játékos meghatározásához kellő számláló
 	 * @return igaz, ha léphet, hamis egyébként
 	 */
 	public boolean isValidStep(int toX, int toY, TableType t,
@@ -115,18 +127,27 @@ public class MalomOperator {
 			return false;
 		return false;
 	}
-	
+
 	/***
-	 * Meghatározza, hogy az adott sor és oszlop megtalálható-e az adott esetek között.
+	 * Meghatározza, hogy az adott sor és oszlop megtalálható-e az adott esetek
+	 * között.
 	 * 
-	 * @param targetx a feldolgozandó x koordináta
-	 * @param targety a feldolgozandó y koordináta
-	 * @param r1 az első kő sor száma
-	 * @param c1 az első kő oszlop száma
-	 * @param r2 a második kő sor száma
-	 * @param c2 a második kő oszlop száma
-	 * @param r3 a harmadik kő sor száma
-	 * @param c3 a harmadik kő oszlop száma
+	 * @param targetx
+	 *            a feldolgozandó x koordináta
+	 * @param targety
+	 *            a feldolgozandó y koordináta
+	 * @param r1
+	 *            az első kő sor száma
+	 * @param c1
+	 *            az első kő oszlop száma
+	 * @param r2
+	 *            a második kő sor száma
+	 * @param c2
+	 *            a második kő oszlop száma
+	 * @param r3
+	 *            a harmadik kő sor száma
+	 * @param c3
+	 *            a harmadik kő oszlop száma
 	 * @return igaz, ha megtalálható, hamis egyébként
 	 */
 	private boolean isUnderTest(int targetx, int targety, int r1, int c1,
@@ -226,17 +247,20 @@ public class MalomOperator {
 	/**
 	 * A táblára egy kő letevését teszi lehetővé.
 	 * 
-	 * @param roundCounter az aktuális jétékos meghatározásához kell
-	 * @param playerOne az első játékos objektuma
-	 * @param playerTwo a második játékos objektuma
+	 * @param roundCounter
+	 *            az aktuális jétékos meghatározásához kell
+	 * @param playerOne
+	 *            az első játékos objektuma
+	 * @param playerTwo
+	 *            a második játékos objektuma
 	 */
-	public void operatorPut(Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
+	public void operatorPut(Integer roundCounter, PlayerType playerOne,
+			PlayerType playerTwo) {
 		if (isValidStep(toX, toY, table, roundCounter)) {
-			table.setTable(toX, toY, (roundCounter-1) % 2 + 1);
-			if (roundCounter % 2 == 1) { 
+			table.setTable(toX, toY, (roundCounter - 1) % 2 + 1);
+			if (roundCounter % 2 == 1) {
 				playerOne.setOnBoardStones(playerOne.getOnBoardStones() + 1);
-			}
-			else {
+			} else {
 				playerTwo.setOnBoardStones(playerTwo.getOnBoardStones() + 1);
 			}
 		}
@@ -245,7 +269,8 @@ public class MalomOperator {
 	/**
 	 * A táblán egy kővel alrébb lépést tesz lehetővé.
 	 * 
-	 * @param roundCounter az aktuális játékos meghatározásához kell
+	 * @param roundCounter
+	 *            az aktuális játékos meghatározásához kell
 	 * @return igaz, ha sikerült a követ alrébb tenni, hamis egyébként
 	 */
 	public boolean operatorMove(Integer roundCounter) {
@@ -386,7 +411,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 3 && fromY == 0) {
 				if (toX == 0 && toY == 0) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -404,7 +429,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 3 && fromY == 1) {
 				if (toX == 3 && toY == 0) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -427,7 +452,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 3 && fromY == 2) {
 				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -445,7 +470,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 4 && fromY == 0) {
 				if (toX == 2 && toY == 2) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -463,7 +488,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 4 && fromY == 1) {
 				if (toX == 4 && toY == 0) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -486,7 +511,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 4 && fromY == 2) {
 				if (toX == 4 && toY == 1) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -504,7 +529,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 5 && fromY == 0) {
 				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -517,7 +542,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 5 && fromY == 1) {
 				if (toX == 5 && toY == 0) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -535,7 +560,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 5 && fromY == 2) {
 				if (toX == 5 && toY == 1) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -548,7 +573,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 6 && fromY == 0) {
 				if (toX == 3 && toY == 1) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -561,7 +586,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 6 && fromY == 1) {
 				if (toX == 6 && toY == 0) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -584,7 +609,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 6 && fromY == 2) {
 				if (toX == 6 && toY == 1) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -597,7 +622,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 7 && fromY == 0) {
 				if (toX == 3 && toY == 0) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -610,7 +635,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 7 && fromY == 1) {
 				if (toX == 7 && toY == 0) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -628,7 +653,7 @@ public class MalomOperator {
 					return true;
 				}
 			}
-			
+
 			if (fromX == 7 && fromY == 2) {
 				if (toX == 7 && toY == 1) {
 					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
@@ -646,17 +671,19 @@ public class MalomOperator {
 	}
 
 	/***
-	 * Megvizsgálja hogy az adott játékos minden köve, malom állásban található-e.
+	 * Megvizsgálja hogy az adott játékos minden köve, malom állásban
+	 * található-e.
 	 * 
-	 * @param roundCounter a játékos meghatározásához kell
-	 * @return	igaz, ha minden kő malomban van, hamis egyébként
+	 * @param roundCounter
+	 *            a játékos meghatározásához kell
+	 * @return igaz, ha minden kő malomban van, hamis egyébként
 	 */
 	public boolean allInMalom(Integer roundCounter) {
 		boolean allInMalom = true;
-		
+
 		for (int r = 0; r < 7; r++) {
 			for (int c = 0; c < 3; c++) {
-				if (table.getTable()[r][c] == roundCounter % 2 +1)
+				if (table.getTable()[r][c] == roundCounter % 2 + 1)
 					if (!isStoneInMalom(r, c, table)) {
 						allInMalom = false;
 						break;
@@ -664,34 +691,39 @@ public class MalomOperator {
 						continue;
 					}
 			}
-			if (!allInMalom) 
+			if (!allInMalom)
 				break;
 			else
 				continue;
 		}
-		
+
 		return allInMalom;
 	}
-	
+
 	/**
 	 * A tábláról egy kő elvételét teszi lehetővé.
 	 * 
-	 * @param X a kiszemelt kő sorszáma
-	 * @param Y a kiszemelt kő oszlopszáma
-	 * @param roundCounter az játékos meghatározásához szükséges
-	 * @param playerOne az első játékost reprezentáló objektum
-	 * @param playerTwo a második játékost reprezentáló objektum
+	 * @param X
+	 *            a kiszemelt kő sorszáma
+	 * @param Y
+	 *            a kiszemelt kő oszlopszáma
+	 * @param roundCounter
+	 *            az játékos meghatározásához szükséges
+	 * @param playerOne
+	 *            az első játékost reprezentáló objektum
+	 * @param playerTwo
+	 *            a második játékost reprezentáló objektum
 	 * @return igaz, sa sikerült eltávolítani a követ, hamis egyébként
 	 */
-	public boolean operatorRemove(int X, int Y, Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
+	public boolean operatorRemove(int X, int Y, Integer roundCounter,
+			PlayerType playerOne, PlayerType playerTwo) {
 		if (allInMalom(roundCounter)) {
 			table.setTable(X, Y, 0);
-			if (roundCounter % 2 + 1 == 1) { 
+			if (roundCounter % 2 + 1 == 1) {
 				playerOne.setStones(playerOne.getStones() - 1);
 				playerOne.setOnBoardStones(playerOne.getOnBoardStones() - 1);
 				return true;
-			}
-			else {
+			} else {
 				playerTwo.setStones(playerTwo.getStones() - 1);
 				playerTwo.setOnBoardStones(playerTwo.getOnBoardStones() - 1);
 				return true;
@@ -699,30 +731,32 @@ public class MalomOperator {
 		} else {
 			if (!isStoneInMalom(X, Y, table)) {
 				table.setTable(X, Y, 0);
-				if (roundCounter % 2 + 1 == 1) { 
+				if (roundCounter % 2 + 1 == 1) {
 					playerOne.setStones(playerOne.getStones() - 1);
-					playerOne.setOnBoardStones(playerOne.getOnBoardStones() - 1);
+					playerOne
+							.setOnBoardStones(playerOne.getOnBoardStones() - 1);
 					return true;
-				}
-				else {
+				} else {
 					playerTwo.setStones(playerTwo.getStones() - 1);
-					playerTwo.setOnBoardStones(playerTwo.getOnBoardStones() - 1);
+					playerTwo
+							.setOnBoardStones(playerTwo.getOnBoardStones() - 1);
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
 	/**
 	 * A táblán egy korongnak az ugrását megvalósító metódus.
 	 * 
-	 * @param roundCounter a jétékos meghatározásához szükséges
+	 * @param roundCounter
+	 *            a jétékos meghatározásához szükséges
 	 * @return igaz, ha sikerült ugrani hamis egyébként
 	 */
 	public boolean operatorJump(Integer roundCounter) {
-		if (isValidStep(toX,toY, table, roundCounter)) {
+		if (isValidStep(toX, toY, table, roundCounter)) {
 			table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 			table.setTable(fromX, fromY, 0);
 			return true;
@@ -839,8 +873,8 @@ public class MalomOperator {
 	}
 
 	/***
-	 * Eldönti az adott helyzetben hogy a sorrakerült játékos lehelyezhet-e követ
-	 * a táblára.
+	 * Eldönti az adott helyzetben hogy a sorrakerült játékos lehelyezhet-e
+	 * követ a táblára.
 	 * 
 	 * @param roundCounter
 	 *            a jelenlegi játékos meghatározásához szükséges számláló
@@ -880,12 +914,15 @@ public class MalomOperator {
 		}
 	}
 
-	/*** 
+	/***
 	 * Meghatározza, hogy az adott játékos ugorhat-e a táblán.
 	 * 
-	 * @param roundCounter a játékos meghatározásához szökséges számláló
-	 * @param playerOne az első játékos objektuma
-	 * @param playerTwo a második játékos objektuma
+	 * @param roundCounter
+	 *            a játékos meghatározásához szökséges számláló
+	 * @param playerOne
+	 *            az első játékos objektuma
+	 * @param playerTwo
+	 *            a második játékos objektuma
 	 * @return igaz, ha ugorhat, hamis egyébként
 	 */
 	public boolean canJump(Integer roundCounter, PlayerType playerOne,
@@ -895,20 +932,474 @@ public class MalomOperator {
 		} else
 			return playerTwo.canJump();
 	}
-	
+
 	/***
 	 * Eldönti hogy az épp soron lévő játékos vehet-e le követ a tábláról.
 	 * 
-	 * @param roundCounter a játékos meghatározásához szükséges
-	 * @param playerOne az első játékos objektuma
-	 * @param playerTwo a második játékos objektuma
-	 * @param malom az állapottér aktuális állapototát tartalmazó gyűjtőobjektum
+	 * @param roundCounter
+	 *            a játékos meghatározásához szükséges
+	 * @param playerOne
+	 *            az első játékos objektuma
+	 * @param playerTwo
+	 *            a második játékos objektuma
+	 * @param malom
+	 *            az állapottér aktuális állapototát tartalmazó gyűjtőobjektum
 	 * @return igaz, ha vehet le, hamis egyébként
 	 */
-	public boolean canRemove(Integer roundCounter, PlayerType playerOne, PlayerType playerTwo, Malom malom) {
+	public boolean canRemove(Integer roundCounter, PlayerType playerOne,
+			PlayerType playerTwo, Malom malom) {
 		if (hasNewMalom(malom.malmok, malom.previousMalmok)) {
 			return true;
-		} else 
+		} else
 			return false;
+	}
+
+	/**
+	 * Meghatározza hogy valamelyik játékosnak elfogytak-e már a kövei.
+	 * 
+	 * @param malom
+	 *            az állapotteret tartalmazó objektum
+	 * @return igaz, ha már csak két köve van
+	 */
+	public boolean notEnoughStones(Malom malom) {
+		if (malom.roundCounter % 2 == 1)
+			if (malom.playerOne.getStones() == 2)
+				return true;
+			else
+				return false;
+		else if (malom.playerTwo.getStones() == 2)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean noWhereToGo(Malom malom) {
+		for (int r = 0; r < 7; r++) {
+			boolean can = false;
+			for (int c = 0; c < 3; c++) {
+				int fromX = c;
+				int fromY = r;
+
+				for (int rr = 0; rr < 7; rr++) {
+					for (int cc = 0; cc < 3; cc++) {
+						int toX = cc;
+						int toY = rr;
+
+						if (fromX == 0 && fromY == 0) {
+							if (toX == 0 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 3 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 0 && fromY == 1) {
+							if (toX == 0 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 1 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 0 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 0 && fromY == 2) {
+							if (toX == 0 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 1 && fromY == 0) {
+							if (toX == 1 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 3 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 1 && fromY == 1) {
+							if (toX == 0 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 1 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 1 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 2 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 1 && fromY == 2) {
+							if (toX == 1 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 2 && fromY == 0) {
+							if (toX == 2 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 3 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 2 && fromY == 1) {
+							if (toX == 1 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 2 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 2 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 2 && fromY == 2) {
+							if (toX == 2 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 3 && fromY == 0) {
+							if (toX == 0 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 7 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 3 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 3 && fromY == 1) {
+							if (toX == 3 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 1 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 3 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 6 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 3 && fromY == 2) {
+							if (toX == 3 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 2 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 5 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 4 && fromY == 0) {
+							if (toX == 2 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 5 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 4 && fromY == 1) {
+							if (toX == 4 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 1 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 6 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 4 && fromY == 2) {
+							if (toX == 4 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 0 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 7 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 5 && fromY == 0) {
+							if (toX == 3 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 5 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 5 && fromY == 1) {
+							if (toX == 5 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 6 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 5 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 5 && fromY == 2) {
+							if (toX == 5 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 6 && fromY == 0) {
+							if (toX == 3 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 6 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 6 && fromY == 1) {
+							if (toX == 6 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 5 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 7 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 6 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 6 && fromY == 2) {
+							if (toX == 6 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 7 && fromY == 0) {
+							if (toX == 3 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 7 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 7 && fromY == 1) {
+							if (toX == 7 && toY == 0) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 6 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 7 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+
+						if (fromX == 7 && fromY == 2) {
+							if (toX == 7 && toY == 1) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+							if (toX == 4 && toY == 2) {
+								if (isValidStep(toX, toY, malom.t,
+										malom.roundCounter))
+									return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/***
+	 * Meghatározza hogy vége van-e játéknak.
+	 * 
+	 * @param malom
+	 *            az állapotteret tartalmazó objektum
+	 * @return igaz, ha valamelyik játékosnak 2 köve van, vagy nem tud hova
+	 *         lépni.
+	 */
+	public boolean isGameOver(Malom malom) {
+		if (notEnoughStones(malom))
+			return true;
+		else {
+			/*if (noWhereToGo(malom)) {
+				return true;
+			} else*/
+				return false;
+		}
+
 	}
 }

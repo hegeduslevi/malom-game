@@ -275,7 +275,6 @@ public class MainScreen {
 			imgPanel.add(s.getLabel());
 		}
 
-		// Algoritmusok.updateTable();
 
 		frmMalom.addMouseListener(new MouseAdapter() {
 			@Override
@@ -316,6 +315,11 @@ public class MainScreen {
 							if (new MalomOperator(malom.t).canJump(
 									malom.roundCounter, malom.playerOne,
 									malom.playerTwo)) {
+								if (malom.roundCounter % 2 == 1) 
+									lblMostUgorhatsz_1.setVisible(true);
+								else
+									lblMostUgorhatsz_2.setVisible(true);
+								
 								logger.info("jump " + haveSelected);
 								hasPlayerTakenTheStep = Algoritmusok
 										.jumpStone(arg0);
@@ -345,6 +349,10 @@ public class MainScreen {
 
 										hasPlayerTakenTheStep = false;
 									}
+								}
+								
+								if(new MalomOperator(malom.t).isGameOver(malom)) {
+									Algoritmusok.felad();
 								}
 							}
 
@@ -383,6 +391,11 @@ public class MainScreen {
 										hasPlayerTakenTheStep = false;
 									}
 								}
+								
+								if(new MalomOperator(malom.t).isGameOver(malom)) {
+									Algoritmusok.felad();
+								}
+								
 							} else {
 								JOptionPane
 										.showMessageDialog(frmMalom,
