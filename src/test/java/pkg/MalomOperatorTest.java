@@ -3,6 +3,29 @@
  */
 package pkg;
 
+/*
+ * #%L
+ * Malom-Game
+ * %%
+ * Copyright (C) 2015 Berkó-gép
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
+
+
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -14,15 +37,14 @@ import game.TableType;
 import org.junit.Test;
 
 /**
- * @author Levente
- *
+ * Teszt osztály a MalomOperátor metódusainak tesztelésére.
  */
 public class MalomOperatorTest {
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#MalomOperator(game.TableType)}.
+	 * Teszt metódus: MalomOperator(game.TableType) konstruktorhoz.
 	 */
-	//@Test
+	@Test
 	public void testMalomOperatorTableType() {
 		Malom m = new Malom();
 		
@@ -33,9 +55,9 @@ public class MalomOperatorTest {
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#MalomOperator(int, int, game.TableType)}.
+	 * Teszt metódus: MalomOperator(int, int, game.TableType) konstruktorhoz.
 	 */
-	//@Test
+	@Test
 	public void testMalomOperatorIntIntTableType() {
 		Malom m = new Malom();
 		
@@ -46,9 +68,9 @@ public class MalomOperatorTest {
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#MalomOperator(int, int, int, int, game.TableType)}.
+	 * Teszt metódus: MalomOperator(int, int, int, int, game.TableType) konstruktorhoz.
 	 */
-	//@Test
+	@Test
 	public void testMalomOperatorIntIntIntIntTableType() {
 		Malom m = new Malom();
 		
@@ -59,17 +81,21 @@ public class MalomOperatorTest {
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#isValidStep(int, int, game.TableType, java.lang.Integer)}.
+	 * Teszt metódus: isValidStep(int, int, game.TableType, java.lang.Integer).
 	 */
-	//@Test
+	@Test
 	public void testIsValidStep() {
-		fail("Not yet implemented");
+		Malom m = new Malom();
+		
+		m.t.setTable(2, 1, 2);
+		
+		assertEquals(false, new MalomOperator(2,2,2,1,m.t).isValidStep(2, 1, m.t, m.roundCounter));
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#isMalom(int, int, int, int, int, int, java.lang.Integer[][])}.
+	 * Teszt metódus: isMalom(int, int, int, int, int, int, java.lang.Integer[][]).
 	 */
-	//@Test
+	@Test
 	public void testIsMalom() {
 		Malom m = new Malom();
 		m.t.setTable(0, 2, 1);
@@ -80,25 +106,34 @@ public class MalomOperatorTest {
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#operatorPut(java.lang.Integer, game.PlayerType, game.PlayerType)}.
+	 * Teszt metódus: operatorPut(java.lang.Integer, game.PlayerType, game.PlayerType).
 	 */
-	//@Test
+	@Test
 	public void testOperatorPut() {
-		fail("Not yet implemented");
+		Malom m = new Malom();
+		new MalomOperator(1,1, m.t).operatorPut(m.roundCounter, m.playerOne, m.playerTwo);
+		
+		assertEquals(true, m.t.getTable()[1][1] == 1);
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#operatorMove(java.lang.Integer)}.
+	 * Teszt metódus: operatorMove(java.lang.Integer).
 	 */
-	//@Test
+	@Test
 	public void testOperatorMove() {
-		fail("Not yet implemented");
+		Malom m = new Malom();
+		m.t.setTable(3, 0, 2);
+		m.t.setTable(3, 1, 2);
+		m.t.setTable(3, 2, 2);
+		m.t.setTable(2, 1, 2);
+		
+		assertEquals(true, new MalomOperator(1, 2, 2, 2, m.t).operatorMove(m.roundCounter));
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#operatorRemove(int, int, java.lang.Integer, game.PlayerType, game.PlayerType)}.
+	 * Teszt metódus: operatorRemove(int, int, java.lang.Integer, game.PlayerType, game.PlayerType).
 	 */
-	//@Test
+	@Test
 	public void testOperatorRemove() {
 		Malom m = new Malom();
 		m.t.setTable(3, 0, 2);
@@ -110,17 +145,23 @@ public class MalomOperatorTest {
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#operatorJump(java.lang.Integer)}.
+	 * Teszt metódus: operatorJump(java.lang.Integer).
 	 */
-	//@Test
+	@Test
 	public void testOperatorJump() {
-		fail("Not yet implemented");
+		Malom m = new Malom();
+		m.t.setTable(3, 0, 2);
+		m.t.setTable(3, 1, 2);
+		m.t.setTable(3, 2, 2);
+		m.t.setTable(2, 1, 2);
+		
+		assertEquals(true, new MalomOperator(1, 2, 2, 2, m.t).operatorJump(m.roundCounter));
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#getMalmok()}.
+	 * Teszt metódus: getMalmok().
 	 */
-	//@Test
+	@Test
 	public void testGetMalmok() {
 		Malom m = new Malom();
 		m.t.setTable(0, 2, 1);
@@ -133,9 +174,9 @@ public class MalomOperatorTest {
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#hasNewMalom(java.util.List, java.util.List)}.
+	 * Teszt metódus: hasNewMalom(java.util.List, java.util.List).
 	 */
-	//@Test
+	@Test
 	public void testHasNewMalom() {
 		Malom m = new Malom();
 		m.t.setTable(0, 2, 1);
@@ -166,9 +207,9 @@ public class MalomOperatorTest {
 	}
 	
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#hasNewMalom(java.util.List, java.util.List)}.
+	 * Teszt metódus: hasNewMalom(java.util.List, java.util.List).
 	 */
-	//@Test
+	@Test
 	public void testHasNewMalomNoModification() {
 		Malom m = new Malom();
 		m.t.setTable(0, 2, 1);
@@ -194,43 +235,46 @@ public class MalomOperatorTest {
 	}
 		
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#canPut(java.lang.Integer, game.PlayerType, game.PlayerType)}.
+	 * Teszt metódus: canPut(java.lang.Integer, game.PlayerType, game.PlayerType).
 	 */
-	//@Test
+	@Test
 	public void testCanPut() {
 		Malom m = new Malom();
 		assertEquals(true, new MalomOperator(m.t).canPut(m.roundCounter, m.playerOne, m.playerTwo));
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#canMove(java.lang.Integer, game.PlayerType, game.PlayerType)}.
+	 * Teszt metódus: canMove(java.lang.Integer, game.PlayerType, game.PlayerType).
 	 */
-	//@Test
+	@Test
 	public void testCanMove() {
 		Malom m = new Malom();
 		assertEquals(false, new MalomOperator(m.t).canMove(m.roundCounter, m.playerOne, m.playerTwo));
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#canJump(java.lang.Integer, game.PlayerType, game.PlayerType)}.
+	 * Teszt metódus: canJump(java.lang.Integer, game.PlayerType, game.PlayerType).
 	 */
-	//@Test
+	@Test
 	public void testCanJump() {
 		Malom m = new Malom();
 		assertEquals(false, new MalomOperator(m.t).canJump(m.roundCounter, m.playerOne, m.playerTwo));
 	}
 
 	/**
-	 * Teszt metódus: {@link game.MalomOperator#canRemove(java.lang.Integer, game.PlayerType, game.PlayerType)}.
+	 * Teszt metódus: canRemove(java.lang.Integer, game.PlayerType, game.PlayerType).
 	 */
-	//@Test
+	@Test
 	public void testCanRemove() {
 		Malom m = new Malom();
 		assertEquals(false, new MalomOperator(m.t).canRemove(m.roundCounter, m.playerOne, m.playerTwo, m));
 		
 	}
 	
-	//@Test
+	/**
+	 * Teszt metódus: isStoneInMalom() abban az esetben mikor mind benne van.
+	 */
+	@Test
 	public void testIsStoneInMalomIN() {
 		Malom m = new Malom();
 		m.t.setTable(0, 2, 1);
@@ -241,7 +285,10 @@ public class MalomOperatorTest {
 		assertEquals(true, new MalomOperator(m.t).isStoneInMalom(4, 2, m.t));
 	}
 
-	//@Test
+	/**
+	 * Teszt metódus: isStoneInMalom() amikor valamelyik nincs.
+	 */
+	@Test
 	public void testIsStoneInMalomNot() {
 		Malom m = new Malom();
 		m.t.setTable(0, 2, 1);
@@ -252,6 +299,9 @@ public class MalomOperatorTest {
 		assertEquals(false, new MalomOperator(m.t).isStoneInMalom(4, 1, m.t));
 	}
 	
+	/**
+	 * Teszt metódus: allInMalom() mindegyikre igaz.
+	 */
 	@Test
 	public void testAllInMalomAll() {
 		Malom m = new Malom();
@@ -264,6 +314,9 @@ public class MalomOperatorTest {
 		assertEquals(true, new MalomOperator(m.t).allInMalom(m.roundCounter));
 	}
 	
+	/**
+	 * Teszt metódus: allInMalom() nem igaz.
+	 */
 	@Test
 	public void testAllInMalomNot() {
 		Malom m = new Malom();

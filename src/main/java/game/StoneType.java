@@ -1,7 +1,7 @@
 /**
  * 
  */
-package GUI;
+package game;
 
 /*
  * #%L

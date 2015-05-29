@@ -27,6 +27,8 @@ package pkg;
 
 
 import static org.junit.Assert.assertEquals;
+import game.ConnectionHandler;
+import game.XMLParser;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -34,9 +36,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.Test;
-
-import service.ConnectionHandler;
-import service.XMLParser;
 
 /**
  *	XML feldolgozó osztyál tesztje.

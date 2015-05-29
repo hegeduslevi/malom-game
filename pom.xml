@@ -103,7 +103,7 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>CLI.Launcher</mainClass>
+									<mainClass>game.Launcher</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>
@@ -125,7 +125,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>pkg.Malom</mainClass>
+					<mainClass>game.Launcher</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

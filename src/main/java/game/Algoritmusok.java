@@ -1,4 +1,4 @@
-package GUI;
+package game;
 
 /*
  * #%L
@@ -22,10 +22,6 @@ package GUI;
  * #L%
  */
 
-import game.Malom;
-import game.MalomOperator;
-import game.TableType;
-
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -40,7 +36,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import service.*;
 
 /***
  * Az alkalmazás grafikus felületének működéséhez szükséges algoritmusok gyűjtő
@@ -301,6 +296,12 @@ public class Algoritmusok {
 		return false;
 	}
 
+	/***
+	 * A grafikus felületen egy kővel veló alrébb ugrás operátorát felhasználó metódus.
+	 * 
+	 * @param me az egér esemény 
+	 * @return igaz sa sikerült ugrani, hamis egyébként
+	 */
 	public static boolean jumpStone(MouseEvent me) {
 		if (MainScreen.haveSelected) {
 			for (StoneType st : MainScreen.stones) {
@@ -386,6 +387,12 @@ public class Algoritmusok {
 		return false;
 	}
 
+	/***
+	 * Az egy kővel alrébb lépés operátorát felhasználó metódus.
+	 * 
+	 * @param me egér esemény
+	 * @return	igaz, ha sikerült a lépés, hamis egyébként
+	 */
 	public static boolean moveStone(MouseEvent me) {
 		if (MainScreen.haveSelected) {
 			for (StoneType st : MainScreen.stones) {
@@ -481,6 +488,11 @@ public class Algoritmusok {
 		return false;
 	}
 
+	/***
+	 * A kő letételét szolgáló operátorral dolgozó metódus.
+	 * 
+	 * @param me egér esemény
+	 */
 	public static void putStone(MouseEvent me) {
 		for (StoneType st : MainScreen.stones) {
 			if (MainScreen.malom.roundCounter % 2 == 1) {
@@ -510,6 +522,12 @@ public class Algoritmusok {
 		}
 	}
 
+	/***
+	 * A kő elvételét implementáló operátort felhasználó metódus.
+	 * 
+	 * @param me egér esemény
+	 * @return igaz, ha sikerült elvenni, hamis egyébként.
+	 */
 	public static boolean removeStone(MouseEvent me) {
 		for (StoneType st : MainScreen.stones) {
 			if (MainScreen.malom.roundCounter % 2 == 1) {

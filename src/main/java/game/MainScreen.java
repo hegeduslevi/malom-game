@@ -1,4 +1,4 @@
-package GUI;
+package game;
 
 /*
  * #%L
@@ -22,10 +22,6 @@ package GUI;
  * #L%
  */
 
-import game.Malom;
-import game.MalomOperator;
-
-import GUI.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -40,13 +36,11 @@ import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import service.*;
 
 /***
  * A főképernyő grafikus felületi elemeit, az eseménykezelőket, és az azokhoz
@@ -73,10 +67,19 @@ public class MainScreen {
 	 */
 	public static final List<StoneType> stones = Algoritmusok.getStones();
 
-	public static MouseEvent oldMe;
-	public static MouseEvent Me;
+	/**
+	 * A lépések játék körökre osztását elősegítő változó, segítségével ellenőrizhető, hogy lépett-e már az adott játékos.
+	 */
 	public static boolean hasPlayerTakenTheStep = false;
+	
+	/**
+	 * Megadja egy több lépéses művelet esetén hogy a kiinduló követ kiválaszották-e már.
+	 */
 	public static boolean haveSelected = false;
+	
+	/**
+	 * többlépéses művelet esetén, a kiválaszott kő adatait tartalmazó objektum.
+	 */
 	public static StoneType selected;
 
 	/**

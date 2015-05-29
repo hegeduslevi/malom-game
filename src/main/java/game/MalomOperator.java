@@ -3,6 +3,29 @@
  */
 package game;
 
+/*
+ * #%L
+ * Malom-Game
+ * %%
+ * Copyright (C) 2015 Berkó-gép
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,6 +227,8 @@ public class MalomOperator {
 	 * A táblára egy kő letevését teszi lehetővé.
 	 * 
 	 * @param roundCounter az aktuális jétékos meghatározásához kell
+	 * @param playerOne az első játékos objektuma
+	 * @param playerTwo a második játékos objektuma
 	 */
 	public void operatorPut(Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
 		if (isValidStep(toX, toY, table, roundCounter)) {
@@ -221,17 +246,18 @@ public class MalomOperator {
 	 * A táblán egy kővel alrébb lépést tesz lehetővé.
 	 * 
 	 * @param roundCounter az aktuális játékos meghatározásához kell
+	 * @return igaz, ha sikerült a követ alrébb tenni, hamis egyébként
 	 */
 	public boolean operatorMove(Integer roundCounter) {
 		if (isValidStep(toX, toY, table, roundCounter)) {
 			if (fromX == 0 && fromY == 0) {
 				if (toX == 0 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 3 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -239,17 +265,17 @@ public class MalomOperator {
 
 			if (fromX == 0 && fromY == 1) {
 				if (toX == 0 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 1 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 0 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -257,12 +283,12 @@ public class MalomOperator {
 
 			if (fromX == 0 && fromY == 2) {
 				if (toX == 0 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -270,12 +296,12 @@ public class MalomOperator {
 
 			if (fromX == 1 && fromY == 0) {
 				if (toX == 1 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 3 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -283,22 +309,22 @@ public class MalomOperator {
 
 			if (fromX == 1 && fromY == 1) {
 				if (toX == 0 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 1 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 1 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 2 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -306,12 +332,12 @@ public class MalomOperator {
 
 			if (fromX == 1 && fromY == 2) {
 				if (toX == 1 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -319,12 +345,12 @@ public class MalomOperator {
 
 			if (fromX == 2 && fromY == 0) {
 				if (toX == 2 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 3 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -332,17 +358,17 @@ public class MalomOperator {
 
 			if (fromX == 2 && fromY == 1) {
 				if (toX == 1 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 2 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 2 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -350,12 +376,12 @@ public class MalomOperator {
 
 			if (fromX == 2 && fromY == 2) {
 				if (toX == 2 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -363,17 +389,17 @@ public class MalomOperator {
 			
 			if (fromX == 3 && fromY == 0) {
 				if (toX == 0 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 7 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 3 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -381,22 +407,22 @@ public class MalomOperator {
 			
 			if (fromX == 3 && fromY == 1) {
 				if (toX == 3 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 1 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 3 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 6 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -404,17 +430,17 @@ public class MalomOperator {
 			
 			if (fromX == 3 && fromY == 2) {
 				if (toX == 3 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 2 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 5 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -422,17 +448,17 @@ public class MalomOperator {
 			
 			if (fromX == 4 && fromY == 0) {
 				if (toX == 2 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 5 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -440,22 +466,22 @@ public class MalomOperator {
 			
 			if (fromX == 4 && fromY == 1) {
 				if (toX == 4 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 1 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 6 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -463,17 +489,17 @@ public class MalomOperator {
 			
 			if (fromX == 4 && fromY == 2) {
 				if (toX == 4 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 0 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 7 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -481,12 +507,12 @@ public class MalomOperator {
 			
 			if (fromX == 5 && fromY == 0) {
 				if (toX == 3 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 5 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -494,17 +520,17 @@ public class MalomOperator {
 			
 			if (fromX == 5 && fromY == 1) {
 				if (toX == 5 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 6 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 5 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -512,12 +538,12 @@ public class MalomOperator {
 			
 			if (fromX == 5 && fromY == 2) {
 				if (toX == 5 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -525,12 +551,12 @@ public class MalomOperator {
 			
 			if (fromX == 6 && fromY == 0) {
 				if (toX == 3 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 6 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -538,22 +564,22 @@ public class MalomOperator {
 			
 			if (fromX == 6 && fromY == 1) {
 				if (toX == 6 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 5 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 7 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 6 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -561,12 +587,12 @@ public class MalomOperator {
 			
 			if (fromX == 6 && fromY == 2) {
 				if (toX == 6 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -574,12 +600,12 @@ public class MalomOperator {
 			
 			if (fromX == 7 && fromY == 0) {
 				if (toX == 3 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 7 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -587,17 +613,17 @@ public class MalomOperator {
 			
 			if (fromX == 7 && fromY == 1) {
 				if (toX == 7 && toY == 0) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 6 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 7 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -605,12 +631,12 @@ public class MalomOperator {
 			
 			if (fromX == 7 && fromY == 2) {
 				if (toX == 7 && toY == 1) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
 				if (toX == 4 && toY == 2) {
-					table.setTable(toX, toY, roundCounter % 2 + 1);
+					table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 					table.setTable(fromX, fromY, 0);
 					return true;
 				}
@@ -619,6 +645,12 @@ public class MalomOperator {
 		return false;
 	}
 
+	/***
+	 * Megvizsgálja hogy az adott játékos minden köve, malom állásban található-e.
+	 * 
+	 * @param roundCounter a játékos meghatározásához kell
+	 * @return	igaz, ha minden kő malomban van, hamis egyébként
+	 */
 	public boolean allInMalom(Integer roundCounter) {
 		boolean allInMalom = true;
 		
@@ -649,6 +681,7 @@ public class MalomOperator {
 	 * @param roundCounter az játékos meghatározásához szükséges
 	 * @param playerOne az első játékost reprezentáló objektum
 	 * @param playerTwo a második játékost reprezentáló objektum
+	 * @return igaz, sa sikerült eltávolítani a követ, hamis egyébként
 	 */
 	public boolean operatorRemove(int X, int Y, Integer roundCounter, PlayerType playerOne, PlayerType playerTwo) {
 		if (allInMalom(roundCounter)) {
@@ -685,11 +718,12 @@ public class MalomOperator {
 	/**
 	 * A táblán egy korongnak az ugrását megvalósító metódus.
 	 * 
-	 * @param roundCounter
+	 * @param roundCounter a jétékos meghatározásához szükséges
+	 * @return igaz, ha sikerült ugrani hamis egyébként
 	 */
 	public boolean operatorJump(Integer roundCounter) {
 		if (isValidStep(toX,toY, table, roundCounter)) {
-			table.setTable(toX, toY, roundCounter % 2 + 1);
+			table.setTable(toX, toY, table.getTable()[fromX][fromY]);
 			table.setTable(fromX, fromY, 0);
 			return true;
 		}
@@ -728,9 +762,7 @@ public class MalomOperator {
 	/***
 	 * Megadja a táblán előforduló malom állapotok listját.
 	 * 
-	 * @param t
-	 *            a tábla állapotát tároló objektum
-	 * @return a malom helyzetek számokkal reprezentált listája.
+	 * @return a malom helyzetek listája.
 	 */
 	public List<Integer[]> getMalmok() {
 		List<Integer[]> res = new ArrayList<Integer[]>();
@@ -866,10 +898,12 @@ public class MalomOperator {
 	
 	/***
 	 * Eldönti hogy az épp soron lévő játékos vehet-e le követ a tábláról.
-	 * @param roundCounter
-	 * @param playerOne
-	 * @param playerTwo
-	 * @return
+	 * 
+	 * @param roundCounter a játékos meghatározásához szükséges
+	 * @param playerOne az első játékos objektuma
+	 * @param playerTwo a második játékos objektuma
+	 * @param malom az állapottér aktuális állapototát tartalmazó gyűjtőobjektum
+	 * @return igaz, ha vehet le, hamis egyébként
 	 */
 	public boolean canRemove(Integer roundCounter, PlayerType playerOne, PlayerType playerTwo, Malom malom) {
 		if (hasNewMalom(malom.malmok, malom.previousMalmok)) {

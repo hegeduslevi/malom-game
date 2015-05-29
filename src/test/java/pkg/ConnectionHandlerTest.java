@@ -27,13 +27,12 @@ package pkg;
 
 
 import static org.junit.Assert.assertEquals;
+import game.ConnectionHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.Test;
-
-import service.ConnectionHandler;
 
 /**
  * Az adatbázis kapcsolat felépítéséért felelős osztály tesztje.

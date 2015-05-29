@@ -1,5 +1,5 @@
 /**
- * A malom játék grafikus felülettel ellátot implementációjának játékszabályait és az állapotteret tartalmazó osztályok gyűjtő csomagja.
+ * A malom játék grafikus felülettel ellátot implementációjának metódusait tartalmazó csomag.
  */
 package game;
 

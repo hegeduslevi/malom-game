@@ -24,7 +24,10 @@ package pkg;
 
 
 import static org.junit.Assert.*;
+import game.Algoritmusok;
+import game.MainScreen;
 import game.Malom;
+import game.StoneType;
 import game.TableType;
 
 import java.awt.Component;
@@ -36,10 +39,6 @@ import javax.swing.JLabel;
 
 import org.junit.Test;
 
-import GUI.Algoritmusok;
-import GUI.MainScreen;
-import GUI.StoneType;
-import service.*;
 
 /***
  * Az algoritmus osztály metódusainak teszt osztálya.

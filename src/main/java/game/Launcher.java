@@ -1,4 +1,7 @@
-package service;
+/**
+ * 
+ */
+package game;
 
 /*
  * #%L
@@ -23,35 +26,31 @@ package service;
  */
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-/***
- * A kapcsolat felépítéséhez szükséges osztály.
+import java.util.Scanner;
+
+/**
+ * Egy választó program amelyben eldönthető hogy grafikusan vagy parancssorosan játszik az ember.
  */
-public class ConnectionHandler {
-	
-	/***
-	 * Az osztály osztályváltozója amely az adatbázis kapcsolatot tartalmazza.
-	 */
-	static Connection conn;
-	
-	/***
-	 * Az adatbázissal a kapcsolatot felépítő osztály.
+public class Launcher {
+
+	/**
+	 * Az indító program main metódusa.
 	 * 
-	 * @return a kapcsolat
+	 * @param args a parancssori argumentumok.
 	 */
-	public static Connection getConnection() {
-		try {
-		if (conn == null || conn.isClosed()) {
-			
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g", "h_f0lhc6", "berkogep");
-			
-		}
-		} catch (SQLException e) {
-			e.getMessage();
+	public static void main(String[] args) {
+		System.out.println("Elindítod a grafikus felületet: (igen/nem)");
+		Scanner sc = new Scanner(System.in);
+		
+		String answ = sc.nextLine();
+		
+		if (answ.equals("igen")) {
+			game.MainScreen.start(args);
+		} else {
+			//TODO
 		}
 		
-		return conn;
+
 	}
+
 }

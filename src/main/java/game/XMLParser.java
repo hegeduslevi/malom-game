@@ -1,7 +1,7 @@
 /**
  * 
  */
-package service;
+package game;
 
 /*
  * #%L
@@ -25,8 +25,6 @@ package service;
  * #L%
  */
 
-
-import game.Malom;
 
 import java.io.IOException;
 import java.sql.Connection;

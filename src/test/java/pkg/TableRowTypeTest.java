@@ -27,10 +27,9 @@ package pkg;
 
 
 import static org.junit.Assert.assertEquals;
+import game.TableRowType;
 
 import org.junit.Test;
-
-import GUI.TableRowType;
 
 /**
  *	A {@code JTable} öszeállításához szükséges osztály tesztje.

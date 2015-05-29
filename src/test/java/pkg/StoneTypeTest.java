@@ -26,9 +26,10 @@ package pkg;
  */
 
 
+import game.StoneType;
+
 import org.junit.Test;
 
-import GUI.StoneType;
 import static org.junit.Assert.*;
 
 /**
